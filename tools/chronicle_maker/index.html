@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,25 +13,33 @@
         <div class="brand-mark" aria-hidden="true">CE</div>
         <div>
           <h1>Chronicle Maker</h1>
-          <p>CE:RF 数据包编辑器</p>
+          <p>CE:RF Datapack Editor</p>
         </div>
       </div>
 
-      <nav class="nav" aria-label="编辑器区域">
-        <button class="nav-item active" data-view="setup"><span class="nav-icon icon-setup"></span>项目</button>
-        <button class="nav-item" data-view="quests"><span class="nav-icon icon-quest"></span>任务</button>
-        <button class="nav-item" data-view="dialogues"><span class="nav-icon icon-dialogue"></span>对话</button>
+      <label class="language-control">Language
+        <select id="languageSelect">
+          <option value="en_us">English</option>
+          <option value="zh_cn">简体中文</option>
+          <option value="ja_jp">日本語</option>
+        </select>
+      </label>
+
+      <nav class="nav" aria-label="Editor sections">
+        <button class="nav-item active" data-view="setup"><span class="nav-icon icon-setup"></span>Project</button>
+        <button class="nav-item" data-view="quests"><span class="nav-icon icon-quest"></span>Quests</button>
+        <button class="nav-item" data-view="dialogues"><span class="nav-icon icon-dialogue"></span>Dialogues</button>
         <button class="nav-item" data-view="npcs"><span class="nav-icon icon-npc"></span>NPC</button>
-        <button class="nav-item" data-view="shops"><span class="nav-icon icon-shop"></span>商店</button>
-        <button class="nav-item" data-view="wallets"><span class="nav-icon icon-wallet"></span>钱包</button>
-        <button class="nav-item" data-view="export"><span class="nav-icon icon-export"></span>导出</button>
+        <button class="nav-item" data-view="shops"><span class="nav-icon icon-shop"></span>Shops</button>
+        <button class="nav-item" data-view="wallets"><span class="nav-icon icon-wallet"></span>Wallets</button>
+        <button class="nav-item" data-view="export"><span class="nav-icon icon-export"></span>Export</button>
       </nav>
 
       <div class="status-box">
         <span class="status-dot" id="projectDot"></span>
         <div>
-          <strong id="projectStatus">未选择项目</strong>
-          <small id="projectHint">可先使用示例，也可选择整合包根目录。</small>
+          <strong id="projectStatus">No project selected</strong>
+          <small id="projectHint">You can use the example first, or select a modpack root folder.</small>
         </div>
       </div>
     </aside>
@@ -39,12 +47,12 @@
     <main class="workspace">
       <header class="topbar">
         <div>
-          <h2 id="viewTitle">项目设置</h2>
-          <p id="viewSubtitle">选择整合包项目，编辑器会读取 mods 与 CE:RF 配置目录。</p>
+          <h2 id="viewTitle">Project Setup</h2>
+          <p id="viewSubtitle">Select a modpack project. The editor will read mods and the CE:RF config folder.</p>
         </div>
         <div class="top-actions">
-          <button class="ghost-button" id="loadExampleBtn">载入示例</button>
-          <button class="primary-button" id="saveAllBtn">写入项目</button>
+          <button class="ghost-button" id="loadExampleBtn">Load Example</button>
+          <button class="primary-button" id="saveAllBtn">Write Project</button>
         </div>
       </header>
 
@@ -52,35 +60,35 @@
         <div class="setup-grid">
           <section class="panel">
             <div class="panel-heading">
-              <h3>项目来源</h3>
-              <span>推荐使用 Chromium / Edge 打开此文件</span>
+              <h3>Project Source</h3>
+              <span>Use Chromium or Edge for best local file access</span>
             </div>
             <div class="control-stack">
-              <button class="primary-button wide" id="pickProjectBtn">选择整合包项目文件夹</button>
-              <button class="ghost-button wide" id="importConfigBtn">读取已有 CE:RF 配置</button>
-              <p class="note">选择后会扫描 <code>mods</code>、<code>kubejs</code> 和 <code>config/chronicle_engine/chronicle_pack</code>。浏览器不支持目录写入时，仍可使用右侧 JSON 预览手动保存。</p>
+              <button class="primary-button wide" id="pickProjectBtn">Select Modpack Project Folder</button>
+              <button class="ghost-button wide" id="importConfigBtn">Read Existing CE:RF Config</button>
+              <p class="note">After selecting a project, the editor scans <code>mods</code>, <code>kubejs</code>, and <code>config/chronicle_engine/chronicle_pack</code>. If your browser cannot write folders, use the JSON preview on the right to save manually.</p>
             </div>
           </section>
 
           <section class="panel">
             <div class="panel-heading">
-              <h3>基础信息</h3>
-              <span>影响生成文件名和命名空间</span>
+              <h3>Basic Info</h3>
+              <span>Controls generated file names and namespaces</span>
             </div>
             <div class="form-grid two">
-              <label>命名空间
+              <label>Namespace
                 <input id="namespaceInput" type="text" value="my_story" autocomplete="off">
               </label>
-              <label>包名称
+              <label>Pack Name
                 <input id="packNameInput" type="text" value="My Chronicle Story" autocomplete="off">
               </label>
-              <label>输出方式
+              <label>Output Mode
                 <select id="exportModeInput">
-                  <option value="config">写入 config/chronicle_engine/chronicle_pack</option>
-                  <option value="datapack">生成标准 datapack 文件夹</option>
+                  <option value="config">Write to config/chronicle_engine/chronicle_pack</option>
+                  <option value="datapack">Generate a standard datapack folder</option>
                 </select>
               </label>
-              <label>任务默认类别
+              <label>Default Quest Category
                 <input id="defaultCategoryInput" type="text" value="main" autocomplete="off">
               </label>
             </div>
@@ -88,21 +96,21 @@
 
           <section class="panel wide-panel">
             <div class="panel-heading">
-              <h3>扫描结果</h3>
-              <span>用于下拉建议，不会自动修改你的文件</span>
+              <h3>Scan Results</h3>
+              <span>Used for suggestions only. Your files are not changed automatically.</span>
             </div>
             <div class="scan-columns">
               <div>
-                <h4>检测到的模组命名空间</h4>
+                <h4>Detected Mod Namespaces</h4>
                 <div class="chip-list" id="modChips"></div>
               </div>
               <div>
-                <h4>可引用的数据</h4>
+                <h4>Available References</h4>
                 <div class="stats-grid">
-                  <span><strong id="questCount">0</strong> 任务</span>
-                  <span><strong id="dialogueCount">0</strong> 对话</span>
-                  <span><strong id="shopCount">0</strong> 商店</span>
-                  <span><strong id="itemHintCount">0</strong> 物品建议</span>
+                  <span><strong id="questCount">0</strong> Quests</span>
+                  <span><strong id="dialogueCount">0</strong> Dialogues</span>
+                  <span><strong id="shopCount">0</strong> Shops</span>
+                  <span><strong id="itemHintCount">0</strong> Item Suggestions</span>
                 </div>
               </div>
             </div>
@@ -114,13 +122,13 @@
         <div class="editor-layout">
           <section class="list-panel">
             <div class="list-head">
-              <h3>任务列表</h3>
-              <button class="small-button" id="addQuestBtn">新增</button>
+              <h3>Quest List</h3>
+              <button class="small-button" id="addQuestBtn">Add</button>
             </div>
             <div class="template-row">
-              <button class="ghost-button small" data-quest-template="kill">击杀任务</button>
-              <button class="ghost-button small" data-quest-template="collect">收集任务</button>
-              <button class="ghost-button small" data-quest-template="interact">对话推进</button>
+              <button class="ghost-button small" data-quest-template="kill">Kill Quest</button>
+              <button class="ghost-button small" data-quest-template="collect">Collect Quest</button>
+              <button class="ghost-button small" data-quest-template="interact">Dialogue Progress</button>
             </div>
             <div class="item-list" id="questList"></div>
           </section>
@@ -132,8 +140,8 @@
         <div class="editor-layout">
           <section class="list-panel">
             <div class="list-head">
-              <h3>对话列表</h3>
-              <button class="small-button" id="addDialogueBtn">新增</button>
+              <h3>Dialogue List</h3>
+              <button class="small-button" id="addDialogueBtn">Add</button>
             </div>
             <div class="item-list" id="dialogueList"></div>
           </section>
@@ -145,8 +153,8 @@
         <div class="editor-layout">
           <section class="list-panel">
             <div class="list-head">
-              <h3>NPC 绑定</h3>
-              <button class="small-button" id="addNpcBtn">新增</button>
+              <h3>NPC Bindings</h3>
+              <button class="small-button" id="addNpcBtn">Add</button>
             </div>
             <div class="item-list" id="npcList"></div>
           </section>
@@ -158,8 +166,8 @@
         <div class="editor-layout">
           <section class="list-panel">
             <div class="list-head">
-              <h3>商店</h3>
-              <button class="small-button" id="addShopBtn">新增</button>
+              <h3>Shops</h3>
+              <button class="small-button" id="addShopBtn">Add</button>
             </div>
             <div class="item-list" id="shopList"></div>
           </section>
@@ -171,8 +179,8 @@
         <div class="editor-layout">
           <section class="list-panel">
             <div class="list-head">
-              <h3>钱包货币</h3>
-              <button class="small-button" id="addWalletBtn">新增</button>
+              <h3>Wallet Currencies</h3>
+              <button class="small-button" id="addWalletBtn">Add</button>
             </div>
             <div class="item-list" id="walletList"></div>
           </section>
@@ -184,21 +192,21 @@
         <div class="export-grid">
           <section class="panel">
             <div class="panel-heading">
-              <h3>检查与写入</h3>
-              <span>写入前会自动生成目录和 JSON 文件</span>
+              <h3>Validate And Write</h3>
+              <span>Directories and JSON files are generated before writing</span>
             </div>
             <div class="control-stack">
-              <button class="primary-button wide" id="validateBtn">检查数据</button>
-              <button class="primary-button wide" id="saveAllBtn2">写入项目</button>
-              <button class="ghost-button wide" id="downloadIndexBtn">下载文件清单</button>
+              <button class="primary-button wide" id="validateBtn">Validate Data</button>
+              <button class="primary-button wide" id="saveAllBtn2">Write Project</button>
+              <button class="ghost-button wide" id="downloadIndexBtn">Download File Index</button>
             </div>
             <div class="message-list" id="validationMessages"></div>
           </section>
 
           <section class="panel preview-panel">
             <div class="panel-heading">
-              <h3>JSON 预览</h3>
-              <span>无需手写，仅用于确认</span>
+              <h3>JSON Preview</h3>
+              <span>No manual writing required. Use this only for confirmation.</span>
             </div>
             <select id="previewSelect"></select>
             <textarea id="jsonPreview" spellcheck="false"></textarea>
@@ -217,8 +225,8 @@
 
   <template id="emptyEditorTemplate">
     <div class="empty-state">
-      <h3>请选择左侧项目</h3>
-      <p>也可以点击“新增”，编辑器会创建一个可直接使用的基础模板。</p>
+      <h3>Select an item on the left</h3>
+      <p>You can also click “Add”; the editor will create a ready-to-use basic template.</p>
     </div>
   </template>
 

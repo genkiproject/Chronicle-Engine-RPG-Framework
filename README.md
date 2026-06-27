@@ -45,6 +45,8 @@ The browser-based no-code maker lives in:
 
 It can scan a selected modpack folder, infer mod namespaces from `mods`, collect useful id suggestions from `kubejs` and existing Chronicle config files, edit quests/dialogues/NPC bindings/shops/wallets through forms, validate the result, and write files directly to `config/chronicle_engine/chronicle_pack`.
 
+Chronicle Maker defaults to English and includes Simplified Chinese and Japanese UI options.
+
 ## Example Pack
 
 A small example pack is provided in:
