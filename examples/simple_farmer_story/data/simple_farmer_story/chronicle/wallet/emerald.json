@@ -1,0 +1,12 @@
+{
+  "currencyId": "minecraft:emerald",
+  "itemId": "minecraft:emerald",
+  "displayName": {
+    "mode": "translate",
+    "key": "item.minecraft.emerald"
+  },
+  "sortOrder": 0,
+  "itemIds": [
+    "minecraft:emerald"
+  ]
+}

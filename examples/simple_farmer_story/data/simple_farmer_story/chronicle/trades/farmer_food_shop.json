@@ -1,0 +1,119 @@
+{
+  "shopId": "simple_farmer_story:farmer_food_shop",
+  "displayName": {
+    "mode": "literal",
+    "value": "Farmer Food Supplies"
+  },
+  "description": {
+    "mode": "literal",
+    "value": "Vanilla food sold for emeralds."
+  },
+  "openCondition": {
+    "condition": "chronicle_engine:always"
+  },
+  "categories": [
+    {
+      "categoryId": "food",
+      "displayName": {
+        "mode": "literal",
+        "value": "Food"
+      },
+      "sortOrder": 0,
+      "formatting": "GREEN"
+    }
+  ],
+  "entries": {
+    "bread": {
+      "entryId": "bread",
+      "displayName": {
+        "mode": "translate",
+        "key": "item.minecraft.bread"
+      },
+      "category": "food",
+      "sortOrder": 0,
+      "costs": [
+        {
+          "type": "item",
+          "itemId": "minecraft:emerald",
+          "count": 1
+        }
+      ],
+      "rewards": [
+        {
+          "type": "item",
+          "itemId": "minecraft:bread",
+          "count": 4
+        }
+      ]
+    },
+    "apple": {
+      "entryId": "apple",
+      "displayName": {
+        "mode": "translate",
+        "key": "item.minecraft.apple"
+      },
+      "category": "food",
+      "sortOrder": 1,
+      "costs": [
+        {
+          "type": "item",
+          "itemId": "minecraft:emerald",
+          "count": 1
+        }
+      ],
+      "rewards": [
+        {
+          "type": "item",
+          "itemId": "minecraft:apple",
+          "count": 3
+        }
+      ]
+    },
+    "baked_potato": {
+      "entryId": "baked_potato",
+      "displayName": {
+        "mode": "translate",
+        "key": "item.minecraft.baked_potato"
+      },
+      "category": "food",
+      "sortOrder": 2,
+      "costs": [
+        {
+          "type": "item",
+          "itemId": "minecraft:emerald",
+          "count": 1
+        }
+      ],
+      "rewards": [
+        {
+          "type": "item",
+          "itemId": "minecraft:baked_potato",
+          "count": 4
+        }
+      ]
+    },
+    "cooked_beef": {
+      "entryId": "cooked_beef",
+      "displayName": {
+        "mode": "translate",
+        "key": "item.minecraft.cooked_beef"
+      },
+      "category": "food",
+      "sortOrder": 3,
+      "costs": [
+        {
+          "type": "item",
+          "itemId": "minecraft:emerald",
+          "count": 2
+        }
+      ],
+      "rewards": [
+        {
+          "type": "item",
+          "itemId": "minecraft:cooked_beef",
+          "count": 3
+        }
+      ]
+    }
+  }
+}

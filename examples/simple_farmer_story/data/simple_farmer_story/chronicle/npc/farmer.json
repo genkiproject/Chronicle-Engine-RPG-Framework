@@ -1,0 +1,18 @@
+{
+  "entityType": "minecraft:villager",
+  "cancelVanillaInteract": true,
+  "dialogueDistance": 8,
+  "shouldLookAtPlayer": true,
+  "shouldStopMoving": true,
+  "bindings": [
+    {
+      "bindingId": "farmer_profession",
+      "dialogueId": "simple_farmer_story:farmer_dialogue",
+      "condition": {
+        "condition": "chronicle_engine:villager_profession",
+        "profession": "minecraft:farmer"
+      },
+      "priority": 100
+    }
+  ]
+}

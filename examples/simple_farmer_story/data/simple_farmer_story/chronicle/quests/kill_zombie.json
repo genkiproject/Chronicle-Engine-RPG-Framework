@@ -1,0 +1,56 @@
+{
+  "id": "simple_farmer_story:kill_zombie",
+  "category": "main",
+  "displayName": {
+    "mode": "literal",
+    "value": "A Farmer's Night Problem"
+  },
+  "description": {
+    "mode": "literal",
+    "value": "A farmer asked you to kill one zombie before it ruins the crops."
+  },
+  "sortOrder": 0,
+  "repeatable": false,
+  "mode": "PROGRESSION",
+  "initialPhaseId": "simple_farmer_story:kill_zombie_phase",
+  "unlockConditions": [
+    {
+      "condition": "chronicle_engine:always"
+    }
+  ],
+  "completionRewards": [
+    {
+      "type": "item",
+      "itemId": "minecraft:iron_ingot",
+      "count": 10
+    }
+  ],
+  "phases": [
+    {
+      "phaseId": "simple_farmer_story:kill_zombie_phase",
+      "displayName": {
+        "mode": "literal",
+        "value": "Kill a Zombie"
+      },
+      "description": {
+        "mode": "literal",
+        "value": "Find and kill one zombie."
+      },
+      "objectives": [
+        {
+          "type": "KILL",
+          "targetId": "minecraft:zombie",
+          "requiredCount": 1,
+          "displayText": {
+            "mode": "literal",
+            "value": "Kill a zombie"
+          },
+          "hidden": false,
+          "optional": false,
+          "extraData": {}
+        }
+      ],
+      "transitions": []
+    }
+  ]
+}

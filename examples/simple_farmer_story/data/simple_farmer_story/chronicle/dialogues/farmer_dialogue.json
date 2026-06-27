@@ -1,0 +1,85 @@
+{
+  "id": "simple_farmer_story:farmer_dialogue",
+  "defaultNpc": {
+    "mode": "literal",
+    "value": "Farmer"
+  },
+  "startNodeId": "root",
+  "nodes": [
+    {
+      "nodeId": "root",
+      "text": {
+        "mode": "literal",
+        "value": "The field is quiet during the day, but zombies keep trampling the crops at night. Can you handle one of them?"
+      },
+      "choices": [
+        {
+          "choiceId": "accept_quest",
+          "text": {
+            "mode": "literal",
+            "value": "I will kill a zombie."
+          },
+          "nextNodeId": "accepted",
+          "conditions": [
+            {
+              "condition": "chronicle_engine:quest_not_started",
+              "questId": "simple_farmer_story:kill_zombie"
+            }
+          ],
+          "actions": [
+            {
+              "type": "start_quest",
+              "questId": "simple_farmer_story:kill_zombie"
+            }
+          ]
+        },
+        {
+          "choiceId": "open_shop",
+          "text": {
+            "mode": "literal",
+            "value": "Show me your food supplies."
+          },
+          "actions": [
+            {
+              "type": "open_shop",
+              "shopId": "simple_farmer_story:farmer_food_shop"
+            }
+          ]
+        },
+        {
+          "choiceId": "leave",
+          "text": {
+            "mode": "literal",
+            "value": "Goodbye."
+          },
+          "actions": [
+            {
+              "type": "close"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeId": "accepted",
+      "text": {
+        "mode": "literal",
+        "value": "Good. Kill one zombie and come back alive. I will pay you in iron."
+      },
+      "choices": [
+        {
+          "choiceId": "close",
+          "text": {
+            "mode": "literal",
+            "value": "I am on it."
+          },
+          "actions": [
+            {
+              "type": "close"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
