@@ -105,7 +105,7 @@ public final class ChronicleEngineDialogueService {
         if (choices.isEmpty()) {
             choices.add(new ChronicleEngineNetwork.ChoiceLine("__close", Component.translatable("screen.chronicle_engine.dialogue.close")));
         }
-        ChronicleEngineNetwork.openDialogue(player, new ChronicleEngineNetwork.OpenDialoguePacket(dialogue.id(), node.nodeId(), npcName, text, choices));
+        ChronicleEngineNetwork.openDialogue(player, new ChronicleEngineNetwork.OpenDialoguePacket(dialogue.id(), node.nodeId(), npcName, text, dialogue.allowEscClose(), choices));
     }
 }
 

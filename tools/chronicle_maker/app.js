@@ -239,6 +239,7 @@ const PHRASES = [
   ["Dialogue ID", "对话 ID", "会話 ID"],
   ["Default NPC Name", "NPC 默认显示名", "NPC デフォルト表示名"],
   ["Start Node ID", "起始节点 ID", "開始ノード ID"],
+  ["Allow ESC Close", "允许 ESC 关闭", "ESCで閉じる"],
   ["Nodes", "节点", "ノード"],
   ["Add Node", "新增节点", "ノードを追加"],
   ["Node ID", "节点 ID", "ノード ID"],
@@ -820,6 +821,7 @@ function renderDialogueEditor() {
       ${field("对话 ID", "id", dialogue.id, "dialogueSuggestions")}
       ${field("NPC 默认显示名", "defaultNpc", dialogue.defaultNpc)}
       ${field("起始节点 ID", "startNodeId", dialogue.startNodeId)}
+      ${checkboxField("允许 ESC 关闭", "allowEscClose", dialogue.allowEscClose !== false)}
     </div>
     <div class="subsection">
       <div class="row-block-head">
@@ -1502,6 +1504,7 @@ function makeDialogue(localName) {
     id,
     defaultNpc: tr("Villager"),
     startNodeId: "root",
+    allowEscClose: true,
     nodes: [makeDialogueNode("root")]
   };
 }
@@ -1845,6 +1848,7 @@ function parseDialogue(json) {
     id: json.id || namespaced("dialogue"),
     defaultNpc: plainText(json.defaultNpc),
     startNodeId: json.startNodeId || "root",
+    allowEscClose: json.allowEscClose !== false,
     nodes: (json.nodes || []).map((node) => ({
       nodeId: node.nodeId || "root",
       text: plainText(node.text),
@@ -1968,6 +1972,7 @@ function buildDialogueJson(dialogue) {
     id: dialogue.id,
     defaultNpc: textValue(dialogue.defaultNpc),
     startNodeId: dialogue.startNodeId || dialogue.nodes[0]?.nodeId || "root",
+    allowEscClose: dialogue.allowEscClose !== false,
     nodes: dialogue.nodes.map((node) => compactObject({
       nodeId: node.nodeId,
       text: textValue(node.text),

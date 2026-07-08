@@ -8,17 +8,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public record DialogueSpec(String id, TextValue defaultNpc, String startNodeId, Map<String, Node> nodes) {
+public record DialogueSpec(String id, TextValue defaultNpc, String startNodeId, boolean allowEscClose, Map<String, Node> nodes) {
     public static DialogueSpec parse(JsonObject json) {
         String id = JsonUtil.string(json, "id", "");
         TextValue defaultNpc = TextValue.parse(json.get("defaultNpc"));
         String startNodeId = JsonUtil.string(json, "startNodeId", "root");
+        boolean allowEscClose = JsonUtil.bool(json, "allowEscClose", true);
         Map<String, Node> nodes = new LinkedHashMap<>();
         for (JsonObject nodeJson : JsonUtil.objects(json, "nodes")) {
             Node node = Node.parse(nodeJson);
             nodes.put(node.nodeId(), node);
         }
-        return new DialogueSpec(id, defaultNpc, startNodeId, nodes);
+        return new DialogueSpec(id, defaultNpc, startNodeId, allowEscClose, nodes);
     }
 
     public Node startNode() {

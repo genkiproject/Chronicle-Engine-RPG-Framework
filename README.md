@@ -37,6 +37,13 @@ External `chronicle_pack` files are loaded after built-in resources, so they ove
 - `/chronicle quest journal`
 - `/chronicle shop open <players> <shop_id>`
 
+## Dialogue Options
+
+Dialogue JSON files may set top-level `allowEscClose`.
+
+- Omit it, or set it to `true`, to keep normal ESC closing behavior.
+- Set it to `false` for mandatory first-run or tutorial dialogues that must be completed through a choice button.
+
 ## Content Tools
 
 The browser-based no-code maker lives in:

@@ -36,6 +36,10 @@ public class ChronicleEngineJournalScreen extends Screen {
     private boolean draggingRoute;
     private double lastMouseX;
     private double lastMouseY;
+    private int routeDetailScroll;
+    private int routeDetailContentHeight;
+    private int routeDetailViewportHeight;
+    private int routeDetailLeft;
     private int refreshTicks;
 
     public ChronicleEngineJournalScreen(ChronicleEngineNetwork.OpenJournalPacket packet) {
@@ -62,7 +66,13 @@ public class ChronicleEngineJournalScreen extends Screen {
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
         if (routeMode) {
-            return super.mouseScrolled(mouseX, mouseY, delta);
+            if (mouseX >= routeDetailLeft && routeDetailViewportHeight > 0) {
+                int max = Math.max(0, routeDetailContentHeight - routeDetailViewportHeight);
+                routeDetailScroll = Mth.clamp(routeDetailScroll - (int) (delta * 22), 0, max);
+            } else {
+                routeOffsetY += delta * 28.0D;
+            }
+            return true;
         }
         int panelWidth = Math.min(980, width - 44);
         int left = (width - panelWidth) / 2;
@@ -102,6 +112,7 @@ public class ChronicleEngineJournalScreen extends Screen {
             for (NodeArea area : nodeAreas) {
                 if (area.contains(mouseX, mouseY)) {
                     selectedNodeId = area.phaseId();
+                    routeDetailScroll = 0;
                     return true;
                 }
             }
@@ -372,56 +383,88 @@ public class ChronicleEngineJournalScreen extends Screen {
         if (selectedNodeId == null || selectedNodeId.isBlank()) {
             selectDefaultNode();
         }
-        int detailWidth = 300;
-        int graphRight = right - detailWidth - 16;
-        graphics.fill(graphRight + 8, top, graphRight + 9, bottom, argb((int) (70 * progress), 0xFFFFFF));
+        int contentWidth = right - left;
+        int graphWidth = Mth.clamp((int) (contentWidth * 0.24F), 64, 118);
+        int graphRight = left + graphWidth;
+        int detailLeft = graphRight + 14;
+        routeDetailLeft = detailLeft;
+        graphics.fill(detailLeft - 7, top, detailLeft - 6, bottom, argb((int) (70 * progress), 0xFFFFFF));
         graphics.enableScissor(left, top, graphRight, bottom);
         nodeAreas.clear();
-        int centerX = (left + graphRight) / 2 + (int) routeOffsetX;
-        int startY = top + 44 + (int) routeOffsetY;
-        int nodeW = 250;
-        int nodeH = 42;
+        ChronicleEngineQuestService.JournalNode hoveredNode = null;
+        int centerX = left + graphWidth / 2 + (int) Mth.clamp(routeOffsetX, -18.0D, 18.0D);
+        int startY = top + 28 + (int) routeOffsetY;
+        int radius = Mth.clamp(graphWidth / 5, 11, 15);
+        int spacing = 50;
         for (int i = 0; i < quest.nodes().size(); i++) {
-            int x = centerX - nodeW / 2;
-            int y = startY + i * 78;
+            int y = startY + i * spacing;
             if (i > 0) {
                 int lineX = centerX;
-                graphics.fill(lineX - 1, y - 36, lineX + 1, y, argb((int) (95 * progress), 0xFFFFFF));
+                graphics.fill(lineX - 1, y - spacing + radius + 3, lineX + 1, y - radius - 3, argb((int) (95 * progress), 0xFFFFFF));
             }
             ChronicleEngineQuestService.JournalNode node = quest.nodes().get(i);
             boolean selected = node.phaseId().equals(selectedNodeId);
-            boolean hovered = mouseX >= x && mouseX <= x + nodeW && mouseY >= y && mouseY <= y + nodeH;
+            NodeArea area = new NodeArea(node.phaseId(), centerX, y, radius + 5);
+            boolean hovered = area.contains(mouseX, mouseY);
+            if (hovered) {
+                hoveredNode = node;
+            }
             int accent = nodeColor(node.status());
-            graphics.fill(x, y, x + nodeW, y + nodeH, argb((int) ((selected ? 165 : hovered ? 128 : 102) * progress), selected ? 0x27303C : 0x101318));
-            graphics.fill(x, y, x + 3, y + nodeH, argb((int) (220 * progress), accent));
-            graphics.drawString(font, trim(node.title(), 28), x + 12, y + 8, argb((int) (235 * progress), selected ? 0xFFFFFF : 0xEDEDED), false);
-            graphics.drawString(font, nodeStatusText(node.status()), x + 12, y + 24, argb((int) (200 * progress), accent), false);
-            nodeAreas.add(new NodeArea(node.phaseId(), x, y, nodeW, nodeH));
+            int fill = selected ? 0x27303C : hovered ? 0x1E242D : 0x101318;
+            fillDiamond(graphics, centerX, y, radius + (selected ? 4 : hovered ? 3 : 2), argb((int) (210 * progress), accent));
+            fillDiamond(graphics, centerX, y, radius + (selected ? 1 : 0), argb((int) ((selected ? 175 : hovered ? 138 : 112) * progress), fill));
+            String marker = String.valueOf(i + 1);
+            graphics.drawString(font, marker, centerX - font.width(marker) / 2, y - 4, argb((int) (235 * progress), selected ? 0xFFFFFF : accent), false);
+            if ("current".equals(node.status())) {
+                graphics.fill(centerX + radius + 5, y - 1, centerX + radius + 9, y + 3, argb((int) (230 * progress), 0xFFD46A));
+            }
+            nodeAreas.add(area);
         }
         graphics.disableScissor();
-        renderNodeDetail(graphics, progress, selectedNode(quest), graphRight + 26, top + 4, right, bottom);
+        if (hoveredNode != null) {
+            graphics.renderTooltip(font, Component.literal(hoveredNode.title()), mouseX, mouseY);
+        }
+        renderNodeDetail(graphics, progress, selectedNode(quest), detailLeft, top + 4, right, bottom);
     }
 
     private void renderNodeDetail(GuiGraphics graphics, float progress, ChronicleEngineQuestService.JournalNode node, int left, int top, int right, int bottom) {
         if (node == null) {
             return;
         }
-        int y = top;
-        graphics.drawString(font, node.title(), left, y, argb((int) (245 * progress), 0xFFD46A), false);
+        routeDetailViewportHeight = bottom - top - 6;
+        int max = Math.max(0, routeDetailContentHeight - routeDetailViewportHeight);
+        routeDetailScroll = Mth.clamp(routeDetailScroll, 0, max);
+        int contentTop = top + 2;
+        int y = contentTop - routeDetailScroll;
+        int contentWidth = Math.max(60, right - left - 10);
+        graphics.enableScissor(left, top, right - 8, bottom);
+        graphics.drawString(font, trim(node.title(), 24), left, y, argb((int) (245 * progress), 0xFFD46A), false);
         y += 14;
-        graphics.drawString(font, nodeStatusText(node.status()) + "  " + node.phaseId(), left, y, argb((int) (160 * progress), 0xB7B7B7), false);
+        y = drawWrapped(graphics, nodeStatusText(node.status()) + "  " + node.phaseId(), left, y, contentWidth, 2, argb((int) (160 * progress), 0xB7B7B7));
         y += 22;
-        y = drawWrapped(graphics, node.description(), left, y, right - left, 8, argb((int) (215 * progress), 0xD8D8D8));
+        y = drawWrapped(graphics, node.description(), left, y, contentWidth, 99, argb((int) (215 * progress), 0xD8D8D8));
         y += 10;
         for (ChronicleEngineQuestService.JournalObjective objective : node.objectives()) {
-            if (y > bottom - 28) {
-                graphics.drawString(font, "...", left, y, argb((int) (180 * progress), 0xB7B7B7), false);
-                break;
-            }
             graphics.drawString(font, objective.text(), left, y, argb((int) (230 * progress), 0xEFEFEF), false);
             y += 12;
             graphics.drawString(font, objective.type() + "  " + objective.progress() + "/" + objective.required(), left + 8, y, argb((int) (170 * progress), 0xB7B7B7), false);
             y += 18;
+        }
+        routeDetailContentHeight = Math.max(0, y + routeDetailScroll - contentTop);
+        graphics.disableScissor();
+        if (routeDetailContentHeight > routeDetailViewportHeight) {
+            int trackX = right - 4;
+            int thumbHeight = Math.max(14, (int) ((routeDetailViewportHeight / (float) routeDetailContentHeight) * routeDetailViewportHeight));
+            int thumbY = top + (int) ((routeDetailScroll / (float) Math.max(1, routeDetailContentHeight - routeDetailViewportHeight)) * (routeDetailViewportHeight - thumbHeight));
+            graphics.fill(trackX, top, trackX + 2, bottom, argb((int) (65 * progress), 0xFFFFFF));
+            graphics.fill(trackX - 1, thumbY, trackX + 3, thumbY + thumbHeight, argb((int) (190 * progress), 0xFFD46A));
+        }
+    }
+
+    private static void fillDiamond(GuiGraphics graphics, int centerX, int centerY, int radius, int color) {
+        for (int y = -radius; y <= radius; y++) {
+            int half = radius - Math.abs(y);
+            graphics.fill(centerX - half, centerY + y, centerX + half + 1, centerY + y + 1, color);
         }
     }
 
@@ -542,9 +585,9 @@ public class ChronicleEngineJournalScreen extends Screen {
         }
     }
 
-    private record NodeArea(String phaseId, int x, int y, int width, int height) {
+    private record NodeArea(String phaseId, int centerX, int centerY, int radius) {
         boolean contains(double mouseX, double mouseY) {
-            return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+            return Math.abs(mouseX - centerX) + Math.abs(mouseY - centerY) <= radius;
         }
     }
 }

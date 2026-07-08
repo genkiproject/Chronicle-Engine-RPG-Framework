@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public final class ChronicleEngineNetwork {
-    private static final String PROTOCOL = "6";
+    private static final String PROTOCOL = "7";
     private static int nextId = 0;
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
@@ -450,12 +450,13 @@ public final class ChronicleEngineNetwork {
         }
     }
 
-    public record OpenDialoguePacket(String dialogueId, String nodeId, Component npcName, Component text, List<ChoiceLine> choices) {
+    public record OpenDialoguePacket(String dialogueId, String nodeId, Component npcName, Component text, boolean allowEscClose, List<ChoiceLine> choices) {
         public static void encode(OpenDialoguePacket packet, FriendlyByteBuf buffer) {
             buffer.writeUtf(packet.dialogueId);
             buffer.writeUtf(packet.nodeId);
             buffer.writeComponent(packet.npcName);
             buffer.writeComponent(packet.text);
+            buffer.writeBoolean(packet.allowEscClose);
             buffer.writeVarInt(packet.choices.size());
             for (ChoiceLine choice : packet.choices) {
                 writeChoice(buffer, choice);
@@ -467,12 +468,13 @@ public final class ChronicleEngineNetwork {
             String nodeId = buffer.readUtf();
             Component npcName = buffer.readComponent();
             Component text = buffer.readComponent();
+            boolean allowEscClose = buffer.readBoolean();
             int size = buffer.readVarInt();
             List<ChoiceLine> choices = new ArrayList<>();
             for (int i = 0; i < size; i++) {
                 choices.add(readChoice(buffer));
             }
-            return new OpenDialoguePacket(dialogueId, nodeId, npcName, text, choices);
+            return new OpenDialoguePacket(dialogueId, nodeId, npcName, text, allowEscClose, choices);
         }
 
         public static void handle(OpenDialoguePacket packet, Supplier<NetworkEvent.Context> context) {

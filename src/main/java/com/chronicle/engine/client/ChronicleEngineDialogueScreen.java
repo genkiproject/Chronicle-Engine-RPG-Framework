@@ -60,6 +60,11 @@ public class ChronicleEngineDialogueScreen extends Screen {
     }
 
     @Override
+    public boolean shouldCloseOnEsc() {
+        return packet.allowEscClose();
+    }
+
+    @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         float progress = ease(Mth.clamp((System.currentTimeMillis() - openedAt) / 190.0F, 0.0F, 1.0F));
         renderColumns(graphics, mouseX, mouseY, progress);
