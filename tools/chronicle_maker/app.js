@@ -821,7 +821,7 @@ function renderDialogueEditor() {
       ${field("对话 ID", "id", dialogue.id, "dialogueSuggestions")}
       ${field("NPC 默认显示名", "defaultNpc", dialogue.defaultNpc)}
       ${field("起始节点 ID", "startNodeId", dialogue.startNodeId)}
-      ${checkboxField("允许 ESC 关闭", "allowEscClose", dialogue.allowEscClose !== false)}
+      ${checkField("允许 ESC 关闭", "allowEscClose", dialogue.allowEscClose !== false)}
     </div>
     <div class="subsection">
       <div class="row-block-head">
@@ -1621,29 +1621,31 @@ function loadExample() {
   const quest = makeQuestFromTemplate("kill");
   quest.id = "simple_farmer_story:kill_zombie";
   quest.category = "main";
-  quest.displayName = "Farmer's Zombie Problem";
-  quest.description = "Help the farmer by killing one zombie.";
-  quest.initialPhaseId = "hunt_zombie";
-  quest.phases[0].phaseId = "hunt_zombie";
-  quest.phases[0].displayName = "Kill a zombie";
-  quest.phases[0].description = "Kill one zombie anywhere.";
-  quest.flagsToSetOnComplete = ["simple_farmer_story:zombie_helped"];
+  quest.displayName = "A Farmer's Night Problem";
+  quest.description = "A farmer asked you to kill one zombie before it ruins the crops.";
+  quest.initialPhaseId = "simple_farmer_story:kill_zombie_phase";
+  quest.phases[0].phaseId = "simple_farmer_story:kill_zombie_phase";
+  quest.phases[0].displayName = "Kill a Zombie";
+  quest.phases[0].description = "Find and kill one zombie.";
+  quest.phases[0].objectives[0].displayText = "Kill a zombie";
+  quest.completionRewards = [defaultReward("item", "minecraft:iron_ingot", 10)];
+  quest.flagsToSetOnComplete = [];
 
   const dialogue = makeDialogue("farmer_dialogue");
   dialogue.id = "simple_farmer_story:farmer_dialogue";
   dialogue.defaultNpc = "Farmer";
-  dialogue.nodes[0].text = "The fields are unsafe at night. Can you deal with a zombie for me?";
+  dialogue.nodes[0].text = "The field is quiet during the day, but zombies keep trampling the crops at night. Can you handle one of them?";
   dialogue.nodes[0].choices = [
     {
       choiceId: "accept_quest",
-      text: "I will help.",
-      nextNodeId: "",
+      text: "I will kill a zombie.",
+      nextNodeId: "accepted",
       conditions: [{ condition: "chronicle_engine:quest_not_started", questId: quest.id }],
-      actions: [{ type: "start_quest", questId: quest.id }, { type: "close" }]
+      actions: [{ type: "start_quest", questId: quest.id }]
     },
     {
       choiceId: "open_shop",
-      text: "Show me your food.",
+      text: "Show me your food supplies.",
       nextNodeId: "",
       conditions: [],
       actions: [{ type: "open_shop", shopId: "simple_farmer_story:farmer_food_shop" }]
@@ -1656,6 +1658,18 @@ function loadExample() {
       actions: [{ type: "close" }]
     }
   ];
+  dialogue.nodes.push({
+    nodeId: "accepted",
+    text: "Good. Kill one zombie and come back alive. I will pay you in iron.",
+    conditionalTexts: [],
+    choices: [{
+      choiceId: "close",
+      text: "I am on it.",
+      nextNodeId: "",
+      conditions: [],
+      actions: [{ type: "close" }]
+    }]
+  });
 
   const npc = makeNpc("farmer");
   npc.bindings[0].bindingId = "simple_farmer_story:farmer_profession";
@@ -1664,16 +1678,21 @@ function loadExample() {
 
   const shop = makeShop("farmer_food_shop");
   shop.shopId = "simple_farmer_story:farmer_food_shop";
-  shop.displayName = "Farmer Food";
+  shop.displayName = "Farmer Food Supplies";
+  shop.description = "Vanilla food sold for emeralds.";
   shop.categories[0] = { categoryId: "food", displayName: "Food", sortOrder: 0, formatting: "GREEN" };
   shop.entries = [
-    { entryId: "bread", displayName: "Bread", costs: [defaultReward("item", "minecraft:emerald", 1)], rewards: [defaultReward("item", "minecraft:bread", 3)], category: "food", visibleCondition: defaultCondition("chronicle_engine:always"), sortOrder: 0 },
-    { entryId: "apple", displayName: "Apple", costs: [defaultReward("item", "minecraft:emerald", 1)], rewards: [defaultReward("item", "minecraft:apple", 4)], category: "food", visibleCondition: defaultCondition("chronicle_engine:always"), sortOrder: 1 }
+    { entryId: "bread", displayName: "item.minecraft.bread", costs: [defaultReward("item", "minecraft:emerald", 1)], rewards: [defaultReward("item", "minecraft:bread", 4)], category: "food", visibleCondition: defaultCondition("chronicle_engine:always"), sortOrder: 0 },
+    { entryId: "apple", displayName: "item.minecraft.apple", costs: [defaultReward("item", "minecraft:emerald", 1)], rewards: [defaultReward("item", "minecraft:apple", 3)], category: "food", visibleCondition: defaultCondition("chronicle_engine:always"), sortOrder: 1 },
+    { entryId: "baked_potato", displayName: "item.minecraft.baked_potato", costs: [defaultReward("item", "minecraft:emerald", 1)], rewards: [defaultReward("item", "minecraft:baked_potato", 4)], category: "food", visibleCondition: defaultCondition("chronicle_engine:always"), sortOrder: 2 },
+    { entryId: "cooked_beef", displayName: "item.minecraft.cooked_beef", costs: [defaultReward("item", "minecraft:emerald", 2)], rewards: [defaultReward("item", "minecraft:cooked_beef", 3)], category: "food", visibleCondition: defaultCondition("chronicle_engine:always"), sortOrder: 3 }
   ];
 
   const wallet = makeWallet("minecraft:emerald");
   wallet.currencyId = "minecraft:emerald";
   wallet.displayName = "Emerald";
+  wallet.itemId = "minecraft:emerald";
+  wallet.itemIds = ["minecraft:emerald"];
 
   state.data = {
     quests: [quest],
@@ -1754,17 +1773,19 @@ async function importConfigPack() {
     showMessages(["请先选择整合包项目文件夹。"], "warn");
     return;
   }
-  const root = await getOptionalDir(state.projectHandle, ["config", "chronicle_engine", "chronicle_pack"]);
-  if (!root) {
-    showMessages(["没有找到 config/chronicle_engine/chronicle_pack。你可以先创建内容再写入。"], "warn");
+  const roots = await discoverChronicleRoots(state.projectHandle);
+  if (!roots.length) {
+    showMessages(["没有找到 CE:RF 配置或数据包内容。你可以选择整合包根目录、chronicle_pack 目录，或标准数据包根目录。"], "warn");
     return;
   }
-  const loaded = await readChronicleConfig(root);
+  const loaded = await readChronicleConfigs(roots);
   if (!loaded.count) {
-    showMessages(["找到了 CE:RF 配置目录，但里面没有可读取的 JSON。"], "warn");
+    showMessages(["找到了 CE:RF 内容目录，但里面没有可读取的 JSON。"], "warn");
     return;
   }
   state.data = loaded.data;
+  if (loaded.namespace) state.settings.namespace = loaded.namespace;
+  if (loaded.exportMode) state.settings.exportMode = loaded.exportMode;
   state.selected = {
     quests: state.data.quests[0]?.id || "",
     dialogues: state.data.dialogues[0]?.id || "",
@@ -1774,7 +1795,77 @@ async function importConfigPack() {
   };
   refreshDerivedHints();
   renderAll();
-  showMessages([`已读取 ${loaded.count} 个 CE:RF JSON 文件。`], "ok");
+  showMessages([`已读取 ${loaded.count} 个 CE:RF JSON 文件，来源 ${loaded.rootCount} 处。`], "ok");
+}
+
+async function discoverChronicleRoots(projectRoot) {
+  const roots = [];
+  const seen = new Set();
+  async function addRoot(handle, label, namespace = "", exportMode = "config") {
+    if (!handle || seen.has(label) || !(await hasChronicleSections(handle))) return;
+    seen.add(label);
+    roots.push({ handle, label, namespace, exportMode });
+  }
+
+  await addRoot(projectRoot, ".", "", "config");
+  await addRoot(await getOptionalDir(projectRoot, ["config", "chronicle_engine", "chronicle_pack"]), "config/chronicle_engine/chronicle_pack", "", "config");
+  await addRoot(await getOptionalDir(projectRoot, ["chronicle_engine", "chronicle_pack"]), "chronicle_engine/chronicle_pack", "", "config");
+  await addRoot(await getOptionalDir(projectRoot, ["chronicle_pack"]), "chronicle_pack", "", "config");
+
+  const selectedNamespaceChronicle = await getOptionalDir(projectRoot, ["chronicle"]);
+  await addRoot(selectedNamespaceChronicle, "chronicle", normalizeNamespace(projectRoot.name), "datapack");
+
+  const dataDir = await getOptionalDir(projectRoot, ["data"]);
+  if (dataDir) await discoverDatapackChronicleRoots(dataDir, "data", roots, seen);
+  await discoverDatapackChronicleRoots(projectRoot, "", roots, seen);
+
+  const openLoaderData = await getOptionalDir(projectRoot, ["config", "openloader", "data"]);
+  if (openLoaderData) {
+    for await (const [packName, packHandle] of openLoaderData.entries()) {
+      if (packHandle.kind !== "directory") continue;
+      const packData = await getOptionalDir(packHandle, ["data"]);
+      if (packData) await discoverDatapackChronicleRoots(packData, `config/openloader/data/${packName}/data`, roots, seen);
+    }
+  }
+  return roots;
+}
+
+async function discoverDatapackChronicleRoots(dataDir, prefix, roots, seen) {
+  for await (const [namespace, namespaceHandle] of dataDir.entries()) {
+    if (namespaceHandle.kind !== "directory") continue;
+    const chronicle = await getOptionalDir(namespaceHandle, ["chronicle"]);
+    if (!chronicle) continue;
+    const label = `${prefix ? `${prefix}/` : ""}${namespace}/chronicle`;
+    if (seen.has(label) || !(await hasChronicleSections(chronicle))) continue;
+    seen.add(label);
+    roots.push({ handle: chronicle, label, namespace: normalizeNamespace(namespace), exportMode: "datapack" });
+  }
+}
+
+async function hasChronicleSections(root) {
+  for (const name of ["quests", "dialogues", "npc", "trades", "shops", "wallet"]) {
+    if (await getOptionalDir(root, [name])) return true;
+  }
+  return false;
+}
+
+async function readChronicleConfigs(roots) {
+  const data = { quests: [], dialogues: [], npcs: [], shops: [], wallets: [] };
+  let count = 0;
+  let namespace = "";
+  let exportMode = "";
+  for (const root of roots) {
+    const loaded = await readChronicleConfig(root.handle);
+    data.quests.push(...loaded.data.quests);
+    data.dialogues.push(...loaded.data.dialogues);
+    data.npcs.push(...loaded.data.npcs);
+    data.shops.push(...loaded.data.shops);
+    data.wallets.push(...loaded.data.wallets);
+    count += loaded.count;
+    namespace ||= root.namespace;
+    exportMode ||= root.exportMode;
+  }
+  return { data, count, namespace, exportMode, rootCount: roots.length };
 }
 
 async function readChronicleConfig(root) {
@@ -1794,7 +1885,7 @@ async function readJsonDir(root, dirName, consumer) {
   if (!dir) return 0;
   let count = 0;
   for await (const [name, handle] of dir.entries()) {
-    if (handle.kind !== "file" || !name.endsWith(".json")) continue;
+    if (handle.kind !== "file" || !name.toLowerCase().endsWith(".json")) continue;
     try {
       const json = JSON.parse(await (await handle.getFile()).text());
       consumer(json, name.replace(/\.json$/i, ""));
@@ -2268,6 +2359,7 @@ function textValue(value) {
 function plainText(value) {
   if (value == null) return "";
   if (typeof value === "string") return value;
+  if (value.mode === "translate" && value.key) return value.key;
   return value.value || "";
 }
 
