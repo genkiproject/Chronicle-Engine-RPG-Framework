@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChronicleEngineShopScreen extends Screen {
-    private static final int ROW_HEIGHT = 54;
+    private static final int HEADER_HEIGHT = 30;
+    private static final int CONTENT_TOP_OFFSET = 40;
+    private static final int FOOTER_HEIGHT = 30;
 
     private ChronicleEngineNetwork.OpenShopPacket packet;
     private final long openedAt = System.currentTimeMillis();
@@ -77,24 +79,26 @@ public class ChronicleEngineShopScreen extends Screen {
         float progress = ease(Mth.clamp((System.currentTimeMillis() - openedAt) / 180.0F, 0.0F, 1.0F));
         graphics.fill(0, 0, width, height, argb((int) (74 * progress), 0x000000));
 
-        int panelWidth = Math.min(820, width - 44);
-        int panelHeight = Math.min(500, height - 58);
+        int panelWidth = panelWidth();
+        int panelHeight = panelHeight();
         int left = (width - panelWidth) / 2;
         int top = (height - panelHeight) / 2 + (int) ((1.0F - progress) * 14.0F);
         int right = left + panelWidth;
         int bottom = top + panelHeight;
-        int categoryWidth = Math.min(142, Math.max(112, panelWidth / 5));
-        int listLeft = left + categoryWidth + 12;
+        int contentTop = top + CONTENT_TOP_OFFSET;
+        int contentBottom = bottom - FOOTER_HEIGHT;
+        int categoryWidth = Mth.clamp(panelWidth / 4, 88, 132);
+        int listLeft = left + categoryWidth + 10;
 
         graphics.fill(left, top, right, bottom, argb((int) (205 * progress), 0x08090B));
-        graphics.fill(left, top, right, top + 30, argb((int) (188 * progress), 0x151922));
-        graphics.fill(left, top + 30, right, top + 31, argb((int) (82 * progress), 0xD8C18A));
-        graphics.fill(left + categoryWidth, top + 42, left + categoryWidth + 1, bottom - 14, argb((int) (62 * progress), 0xFFFFFF));
+        graphics.fill(left, top, right, top + HEADER_HEIGHT, argb((int) (188 * progress), 0x151922));
+        graphics.fill(left, top + HEADER_HEIGHT, right, top + HEADER_HEIGHT + 1, argb((int) (82 * progress), 0xD8C18A));
+        graphics.fill(left + categoryWidth, contentTop, left + categoryWidth + 1, contentBottom, argb((int) (62 * progress), 0xFFFFFF));
         graphics.drawString(font, packet.title(), left + 14, top + 11, argb((int) (245 * progress), 0xFFD46A), false);
 
-        renderCategories(graphics, mouseX, mouseY, progress, left, top + 44, categoryWidth, bottom);
-        renderEntries(graphics, mouseX, mouseY, progress, listLeft, top + 44, right, bottom);
-        renderWalletSummary(graphics, progress, left + 14, bottom - 32);
+        renderCategories(graphics, mouseX, mouseY, progress, left, contentTop, categoryWidth, contentBottom);
+        renderEntries(graphics, mouseX, mouseY, progress, listLeft, contentTop, right, contentBottom);
+        renderWalletSummary(graphics, progress, left + 10, contentBottom + 3);
         renderHoveredTooltip(graphics, mouseX, mouseY);
         super.render(graphics, mouseX, mouseY, partialTick);
     }
@@ -104,7 +108,7 @@ public class ChronicleEngineShopScreen extends Screen {
             return;
         }
         ChronicleEngineNetwork.WalletLine line = packet.wallet().get(0);
-        int width = 132;
+        int width = 122;
         int height = 24;
         graphics.fill(x, y, x + width, y + height, argb((int) (138 * progress), 0x101318));
         graphics.fill(x, y, x + 2, y + height, argb((int) (225 * progress), 0xFFD46A));
@@ -118,7 +122,7 @@ public class ChronicleEngineShopScreen extends Screen {
 
     private void renderCategories(GuiGraphics graphics, int mouseX, int mouseY, float progress, int left, int top, int categoryWidth, int bottom) {
         categoryAreas.clear();
-        int rowHeight = 28;
+        int rowHeight = compactLayout() ? 23 : 28;
         int y = top;
         for (ChronicleEngineNetwork.ShopCategoryLine category : packet.categories()) {
             if (y + rowHeight > bottom - 18) {
@@ -141,6 +145,7 @@ public class ChronicleEngineShopScreen extends Screen {
         idAreas.clear();
         List<ChronicleEngineNetwork.ShopEntryLine> entries = filteredEntries();
         int visibleRows = visibleRows();
+        int rowHeight = rowHeight();
         scroll = Mth.clamp(scroll, 0, Math.max(0, entries.size() - visibleRows));
 
         for (int i = 0; i < visibleRows; i++) {
@@ -150,25 +155,25 @@ public class ChronicleEngineShopScreen extends Screen {
             }
             ChronicleEngineNetwork.ShopEntryLine entry = entries.get(index);
             float rowProgress = ease(Mth.clamp((System.currentTimeMillis() - categoryChangedAt - i * 28L) / 150.0F, 0.0F, 1.0F));
-            int y = top + i * ROW_HEIGHT + (int) ((1.0F - rowProgress) * 10.0F);
+            int y = top + i * rowHeight + (int) ((1.0F - rowProgress) * 8.0F);
             int rowAlpha = (int) (progress * rowProgress * 255.0F);
-            boolean hovered = mouseX >= left && mouseX <= right - 12 && mouseY >= y && mouseY <= y + ROW_HEIGHT - 6;
-            graphics.fill(left, y, right - 12, y + ROW_HEIGHT - 6, argb(Math.min(rowAlpha, hovered ? 126 : 90), hovered ? 0x1E242D : 0x101318));
-            graphics.fill(left, y, left + 2, y + ROW_HEIGHT - 6, argb(Math.min(rowAlpha, hovered ? 210 : 76), 0xFFD46A));
+            boolean hovered = mouseX >= left && mouseX <= right - 8 && mouseY >= y && mouseY <= y + rowHeight - 3;
+            graphics.fill(left, y, right - 8, y + rowHeight - 3, argb(Math.min(rowAlpha, hovered ? 126 : 90), hovered ? 0x1E242D : 0x101318));
+            graphics.fill(left, y, left + 2, y + rowHeight - 3, argb(Math.min(rowAlpha, hovered ? 210 : 76), 0xFFD46A));
 
             int iconX = left + 11;
-            int iconY = y + 16;
+            int iconY = y + (rowHeight - 16) / 2 - 1;
             int shownItems = Math.min(3, entry.rewardItems().size());
             for (int itemIndex = 0; itemIndex < shownItems; itemIndex++) {
                 ChronicleEngineNetwork.ShopItemLine item = entry.rewardItems().get(itemIndex);
                 ItemStack stack = stack(item);
-                int x = iconX + itemIndex * 22;
+                int x = iconX + itemIndex * 20;
                 if (!stack.isEmpty()) {
                     graphics.renderItem(stack, x, iconY);
                     graphics.renderItemDecorations(font, stack, x, iconY, item.count() > 1 ? Integer.toString(item.count()) : null);
                     itemAreas.add(new ItemArea(stack, x, iconY, 16, 16));
                 }
-                int dotX = x + 13;
+                int dotX = x + 12;
                 int dotY = iconY - 4;
                 boolean dotHovered = mouseX >= dotX && mouseX <= dotX + 6 && mouseY >= dotY && mouseY <= dotY + 6;
                 graphics.fill(dotX, dotY, dotX + 6, dotY + 6, argb(Math.min(rowAlpha, dotHovered ? 230 : 145), dotHovered ? 0xFFD46A : 0x59616C));
@@ -185,24 +190,23 @@ public class ChronicleEngineShopScreen extends Screen {
             boolean namedNbtItem = !entry.rewardItems().isEmpty()
                     && !entry.rewardItems().get(0).nbt().isBlank();
             Component itemName = primary.isEmpty() || nbtItem || namedNbtItem ? entry.name() : primary.getHoverName();
-            int nameX = shownItems == 0 ? left + 12 : iconX + shownItems * 22 + 4;
-            int nameWidth = Math.max(60, right - nameX - 88);
-            graphics.drawString(font, trimToWidth(itemName.getString(), nameWidth), nameX, y + 8, argb(Math.min(rowAlpha, 235), 0xEFEFEF), false);
-            Component cost = Component.translatable("screen.chronicle_engine.shop.cost", trim(describeItems(entry.costItems(), entry.costs()), 42));
-            graphics.drawString(font, cost, nameX, y + 28, argb(Math.min(rowAlpha, 196), 0xFFD46A), false);
-
-            int buttonWidth = 46;
-            int buttonHeight = 21;
-            int buttonX = right - 72;
-            int buttonY = y + 14;
+            int buttonWidth = compactLayout() ? 40 : 46;
+            int buttonHeight = compactLayout() ? 18 : 21;
+            int buttonX = right - buttonWidth - 16;
+            int buttonY = y + (rowHeight - buttonHeight) / 2 - 1;
+            int nameX = shownItems == 0 ? left + 12 : iconX + shownItems * 20 + 4;
+            int nameWidth = Math.max(48, buttonX - nameX - 8);
+            graphics.drawString(font, trimToWidth(itemName.getString(), nameWidth), nameX, y + 4, argb(Math.min(rowAlpha, 235), 0xEFEFEF), false);
+            Component cost = Component.translatable("screen.chronicle_engine.shop.cost", trim(describeItems(entry.costItems(), entry.costs()), compactLayout() ? 29 : 42));
+            graphics.drawString(font, trimToWidth(cost.getString(), nameWidth), nameX, y + 18, argb(Math.min(rowAlpha, 196), 0xFFD46A), false);
             boolean buttonHovered = mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= buttonY && mouseY <= buttonY + buttonHeight;
             graphics.fill(buttonX, buttonY, buttonX + buttonWidth, buttonY + buttonHeight, argb(Math.min(rowAlpha, 145), buttonHovered ? 0x353B45 : 0x20242B));
-            graphics.drawString(font, Component.translatable("screen.chronicle_engine.shop.buy"), buttonX + 11, buttonY + 7, argb(Math.min(rowAlpha, 230), buttonHovered ? 0xFFD46A : 0xEDEDED), false);
+            graphics.drawString(font, Component.translatable("screen.chronicle_engine.shop.buy"), buttonX + (compactLayout() ? 7 : 11), buttonY + (compactLayout() ? 5 : 7), argb(Math.min(rowAlpha, 230), buttonHovered ? 0xFFD46A : 0xEDEDED), false);
             buyAreas.add(new BuyArea(entry.entryId(), buttonX, buttonY, buttonWidth, buttonHeight));
         }
 
         if (entries.size() > visibleRows) {
-            graphics.drawString(font, (scroll + 1) + " / " + Math.max(1, entries.size() - visibleRows + 1), right - 58, bottom - 16, argb((int) (160 * progress), 0xB0B0B0), false);
+            graphics.drawString(font, (scroll + 1) + " / " + Math.max(1, entries.size() - visibleRows + 1), right - 54, bottom + 10, argb((int) (160 * progress), 0xB0B0B0), false);
         }
     }
 
@@ -244,8 +248,23 @@ public class ChronicleEngineShopScreen extends Screen {
     }
 
     private int visibleRows() {
-        int panelHeight = Math.min(500, height - 58);
-        return Math.max(1, (panelHeight - 66) / ROW_HEIGHT);
+        return Math.max(1, (panelHeight() - CONTENT_TOP_OFFSET - FOOTER_HEIGHT) / rowHeight());
+    }
+
+    private int panelWidth() {
+        return Math.min(820, Math.max(1, width - 20));
+    }
+
+    private int panelHeight() {
+        return Math.min(500, Math.max(1, height - 20));
+    }
+
+    private boolean compactLayout() {
+        return height <= 340 || width <= 560;
+    }
+
+    private int rowHeight() {
+        return compactLayout() ? 36 : 46;
     }
 
     private ItemStack stack(ChronicleEngineNetwork.ShopItemLine item) {

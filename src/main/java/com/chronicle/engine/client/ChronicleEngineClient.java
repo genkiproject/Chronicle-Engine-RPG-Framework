@@ -11,8 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,7 +31,6 @@ public final class ChronicleEngineClient {
 
     public static void init() {
         MinecraftForge.EVENT_BUS.addListener(ChronicleEngineClient::onClientTick);
-        MinecraftForge.EVENT_BUS.addListener(ChronicleEngineClient::onRenderOverlay);
     }
 
     public static void openDialogue(ChronicleEngineNetwork.OpenDialoguePacket packet) {
@@ -92,31 +90,27 @@ public final class ChronicleEngineClient {
         }
     }
 
-    private static void onRenderOverlay(RenderGuiOverlayEvent.Post event) {
-        if (!event.getOverlay().id().equals(VanillaGuiOverlay.HOTBAR.id())) {
+    private static void renderQuestOverlay(GuiGraphics graphics, int screenWidth, int screenHeight) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player == null || minecraft.level == null) {
             return;
         }
-        Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player == null || minecraft.level == null || markers.isEmpty()) {
-            if (minecraft.player != null && minecraft.level != null) {
-                renderQuestTracker(event.getGuiGraphics(), event.getWindow().getGuiScaledWidth(), 18);
-            }
+        int y = renderQuestTracker(graphics, screenWidth, 12) + 6;
+        if (markers.isEmpty()) {
             return;
         }
         String dimension = minecraft.level.dimension().location().toString();
-        GuiGraphics graphics = event.getGuiGraphics();
-        int y = renderQuestTracker(graphics, event.getWindow().getGuiScaledWidth(), 18) + 8;
-        int x = event.getWindow().getGuiScaledWidth() - 220;
+        int x = screenWidth - 196;
         for (ChronicleEngineNetwork.MarkerLine marker : markers) {
             if (!marker.dimension().equals(dimension)) {
                 continue;
             }
             double distance = Math.sqrt(minecraft.player.distanceToSqr(marker.x() + 0.5D, marker.y() + 0.5D, marker.z() + 0.5D));
             String text = "◇ " + marker.label() + "  " + (int) distance + "m";
-            graphics.fill(x - 6, y - 4, x + 210, y + 12, 0x88000000);
+            graphics.fill(x - 6, y - 4, x + 188, y + 12, 0x88000000);
             graphics.drawString(minecraft.font, text, x, y, 0xFFFFD46A, false);
             y += 16;
-            if (y > 100) {
+            if (y > Math.min(screenHeight - 16, 108)) {
                 break;
             }
         }
@@ -192,6 +186,13 @@ public final class ChronicleEngineClient {
                     "key.categories.chronicle_engine"
             );
             event.register(openJournal);
+        }
+
+        @SubscribeEvent
+        public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+            // Independent from the vanilla hotbar, so HUD replacement mods cannot suppress it.
+            event.registerAboveAll("quest_tracker", (gui, graphics, partialTick, screenWidth, screenHeight) ->
+                    renderQuestOverlay(graphics, screenWidth, screenHeight));
         }
     }
 }
