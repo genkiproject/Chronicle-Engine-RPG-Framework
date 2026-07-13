@@ -42,6 +42,14 @@
           <small id="projectHint">You can use the example first, or select a modpack root folder.</small>
         </div>
       </div>
+
+      <div class="journey-box">
+        <div class="journey-head">
+          <strong>Publish Checklist</strong>
+          <button class="tiny-button" type="button" id="runChecklistBtn">Check</button>
+        </div>
+        <div class="journey-list" id="journeyList"></div>
+      </div>
     </aside>
 
     <main class="workspace">
@@ -51,13 +59,36 @@
           <p id="viewSubtitle">Select a modpack project. The editor will read mods and the CE:RF config folder.</p>
         </div>
         <div class="top-actions">
+          <button class="ghost-button" id="quickStartBtn">5-Minute Guide</button>
           <button class="ghost-button" id="loadExampleBtn">Load Example</button>
           <button class="primary-button" id="saveAllBtn">Write Project</button>
         </div>
       </header>
 
+      <section class="guide-strip" id="guideStrip"></section>
+
       <section class="view active" data-view-panel="setup">
         <div class="setup-grid">
+          <section class="panel wide-panel beginner-panel" id="starterPanel">
+            <div class="panel-heading">
+              <h3>5-Minute First Quest</h3>
+              <span>Build a tiny playable loop before touching advanced settings</span>
+            </div>
+            <div class="starter-flow">
+              <div class="starter-step"><b>1</b><span>Pick who speaks</span></div>
+              <div class="starter-step"><b>2</b><span>Write what the player does</span></div>
+              <div class="starter-step"><b>3</b><span>Add a reward</span></div>
+              <div class="starter-step"><b>4</b><span>Connect a shop</span></div>
+              <div class="starter-step"><b>5</b><span>Check and write</span></div>
+            </div>
+            <div class="inline-actions">
+              <button class="primary-button" id="starterLoopBtn">Create Starter Loop</button>
+              <button class="ghost-button" data-jump-view="quests">Open Quest Board</button>
+              <button class="ghost-button" id="guideValidateBtn">Check Missing Pieces</button>
+            </div>
+            <p class="note">Think of it like a miniature stage play: one character speaks, the player accepts a request, the task is completed, and a reward or shop appears.</p>
+          </section>
+
           <section class="panel">
             <div class="panel-heading">
               <h3>Project Source</h3>

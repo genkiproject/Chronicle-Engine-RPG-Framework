@@ -334,7 +334,94 @@ const PHRASES = [
   ["General", "常用", "一般"],
   ["Bread", "面包", "パン"],
   ["Emerald", "绿宝石", "エメラルド"],
-  ["Currency", "货币", "通貨"]
+  ["Currency", "货币", "通貨"],
+  ["5-Minute Guide", "5分钟上手", "5分ガイド"],
+  ["Publish Checklist", "发布前检查", "公開前チェック"],
+  ["Check", "检查", "チェック"],
+  ["5-Minute First Quest", "5分钟做出第一个任务", "5分で最初のクエスト"],
+  ["Build a tiny playable loop before touching advanced settings", "先做出一个能跑通的小闭环，再碰高级设置", "高度な設定の前に、まず遊べる小さな流れを作ります"],
+  ["Pick who speaks", "选择谁来开口", "話す相手を選ぶ"],
+  ["Write what the player does", "写玩家要做什么", "プレイヤーがすることを書く"],
+  ["Add a reward", "放入完成奖励", "報酬を追加"],
+  ["Connect a shop", "关联一个商店", "ショップをつなぐ"],
+  ["Check and write", "检查并写入", "確認して書き込む"],
+  ["Create Starter Loop", "创建上手闭环", "スターターを作成"],
+  ["Open Quest Board", "打开任务面板", "クエスト画面を開く"],
+  ["Check Missing Pieces", "检查缺少什么", "不足を確認"],
+  ["Think of it like a miniature stage play: one character speaks, the player accepts a request, the task is completed, and a reward or shop appears.", "把它当成一段迷你舞台剧：一个角色开口，玩家接下委托，完成目标，然后获得奖励或打开商店。", "小さな舞台劇のように考えます。人物が話し、プレイヤーが依頼を受け、目標を達成し、報酬やショップが出ます。"],
+  ["Beginner Path", "新手路线", "初心者ルート"],
+  ["Player Preview", "玩家视角预览", "プレイヤープレビュー"],
+  ["First make one playable loop: dialogue starts a quest, the quest has a clear objective, and the NPC can also open a shop.", "先做出一个能玩的闭环：对话能接任务，任务有明确目标，NPC 也能打开商店。", "まず遊べる流れを1つ作ります。会話でクエストを受け、クエストに明確な目標があり、NPC がショップも開ける状態です。"],
+  ["Edit this like a story board. Each phase is one scene, and transitions decide which scene comes next.", "把这里当成故事分镜来改。每个阶段是一幕，跳转决定下一幕。", "ここは絵コンテのように編集します。各フェーズが1シーンで、移動先が次のシーンです。"],
+  ["Write the lines the player will actually read. Choices are buttons, and actions are what the button does.", "这里写玩家真正会读到的台词。选项就是按钮，动作就是按钮按下后发生的事。", "プレイヤーが実際に読む台詞を書きます。選択肢はボタンで、アクションは押した後に起きることです。"],
+  ["Choose who owns the dialogue. For villagers, profession matching is usually the easiest route.", "选择谁负责这段对话。村民一般用职业匹配最省心。", "誰がこの会話を持つか選びます。村人なら職業マッチが一番簡単です。"],
+  ["Build the store shelf here: categories are shelves, entries are the goods, costs are what the player pays.", "这里搭货架：分类是货架，商品是货物，花费是玩家付的钱。", "ここで棚を作ります。カテゴリーは棚、商品は品物、コストは支払いです。"],
+  ["Bind money items here. Shops can still use item costs, but wallets make large prices manageable.", "这里绑定钱币物品。商店仍可直接收物品，但钱包更适合大额价格。", "ここで通貨アイテムを登録します。ショップはアイテム支払いも使えますが、高額取引にはウォレットが便利です。"],
+  ["Run validation before writing. Treat warnings as design notes and errors as must-fix blockers.", "写入前先检查。警告是设计提醒，错误是必须修的阻断项。", "書き込み前に検証します。警告は設計メモ、エラーは必ず直す項目です。"],
+  ["Quest exists", "已有任务", "クエストあり"],
+  ["Dialogue starts quest", "对话能接任务", "会話でクエスト開始"],
+  ["NPC opens dialogue", "NPC 能打开对话", "NPC が会話を開く"],
+  ["Dialogue opens shop", "对话能打开商店", "会話でショップを開く"],
+  ["Wallet is set", "钱包已设置", "ウォレット設定済み"],
+  ["Validation passes", "检查通过", "検証成功"],
+  ["No quest yet", "还没有任务", "クエストなし"],
+  ["No dialogue starts a quest yet", "还没有对话会接取任务", "クエスト開始会話なし"],
+  ["No NPC binding reaches a dialogue yet", "还没有 NPC 绑定到对话", "会話につながるNPCなし"],
+  ["No dialogue opens a shop yet", "还没有对话会打开商店", "ショップを開く会話なし"],
+  ["No wallet currency yet", "还没有钱包货币", "ウォレット通貨なし"],
+  ["Fix validation errors", "修复检查错误", "検証エラーを修正"],
+  ["Starts From", "开始于", "開始"],
+  ["Current Goal", "当前目标", "現在の目標"],
+  ["Reward", "奖励", "報酬"],
+  ["Speaker", "说话者", "話者"],
+  ["First Line", "第一句台词", "最初の台詞"],
+  ["Buttons", "按钮", "ボタン"],
+  ["Owner", "负责者", "担当"],
+  ["Binding Rule", "绑定规则", "バインドルール"],
+  ["Behavior", "行为", "挙動"],
+  ["Shelves", "货架", "棚"],
+  ["Goods", "商品", "商品"],
+  ["Price Example", "价格示例", "価格例"],
+  ["Money Item", "钱币物品", "通貨アイテム"],
+  ["Stored As", "保存为", "保存先"],
+  ["Usage", "用途", "用途"],
+  ["No dialogue button starts this quest yet", "还没有对话按钮会接取这个任务", "このクエストを開始する会話ボタンがありません"],
+  ["No objective yet", "还没有目标", "目標がありません"],
+  ["No reward yet", "还没有奖励", "報酬がありません"],
+  ["NPC", "NPC", "NPC"],
+  ["No line yet", "还没有台词", "台詞がありません"],
+  ["No choices yet", "还没有选项", "選択肢がありません"],
+  ["No entity selected", "还没有选择实体", "エンティティ未選択"],
+  ["No dialogue selected", "还没有选择对话", "会話未選択"],
+  ["blocks vanilla trade", "阻止原版交易", "バニラ取引を止める"],
+  ["keeps vanilla action", "保留原版交互", "バニラ操作を残す"],
+  ["No categories yet", "还没有分类", "カテゴリーがありません"],
+  ["No goods yet", "还没有商品", "商品がありません"],
+  ["No item selected", "还没有选择物品", "アイテム未選択"],
+  ["Players can store these items in the CE:RF wallet for large shop prices.", "玩家可以把这些物品存进 CE:RF 钱包，适合大额商店价格。", "プレイヤーはこれらのアイテムを CE:RF ウォレットへ入れられ、高額ショップに向いています。"],
+  ["A unique story label. Use namespace:name, for example my_story:first_job.", "唯一的故事标签，格式为 namespace:name，例如 my_story:first_job。", "一意の物語ラベルです。namespace:name、例 my_story:first_job。"],
+  ["The name players see in game.", "玩家在游戏里看到的名字。", "ゲーム内で表示される名前です。"],
+  ["The first scene after the player accepts this quest.", "玩家接取任务后的第一幕。", "クエスト受注後の最初のシーンです。"],
+  ["A short reason for why the player is doing this.", "简短说明玩家为什么要做这件事。", "プレイヤーがこれをする理由を短く書きます。"],
+  ["A stable name used by transitions. Keep it simple and do not rename it casually.", "跳转用的稳定名称，尽量简单，不要随便改名。", "移動先に使う安定した名前です。簡単にし、気軽に変更しないでください。"],
+  ["What the player should do right now.", "玩家当前应该做什么。", "プレイヤーが今することです。"],
+  ["Optional flavor text shown in the guide.", "任务指南里显示的可选剧情说明。", "ガイドに表示される任意の物語テキストです。"],
+  ["What the player kills, collects, offers, or interacts with.", "玩家要击杀、收集、交付或交互的对象。", "討伐、収集、納品、会話する対象です。"],
+  ["The task line shown to the player.", "显示给玩家看的任务目标文字。", "プレイヤーに見せる目標文です。"],
+  ["Where the story goes after this phase is done.", "这一阶段完成后剧情走向哪里。", "このフェーズ完了後に進む先です。"],
+  ["The dialogue file that an NPC can open.", "NPC 可以打开的对话文件。", "NPC が開ける会話ファイルです。"],
+  ["The first line shown when this dialogue opens.", "打开对话后显示的第一句。", "会話開始時に表示される最初の行です。"],
+  ["What the NPC says on this scene.", "NPC 在这一幕说的话。", "このシーンで NPC が話す内容です。"],
+  ["The option the player clicks.", "玩家点击的选项文字。", "プレイヤーがクリックする選択肢です。"],
+  ["Leave empty to close, or choose another node to continue the conversation.", "留空表示关闭，也可以选择另一个节点继续对话。", "空欄なら閉じます。別ノードを選ぶと会話が続きます。"],
+  ["The creature or villager type that can open this dialogue.", "可以打开这段对话的生物或村民类型。", "この会話を開ける生物または村人タイプです。"],
+  ["For villagers, this is usually easier than matching names.", "对村民来说，匹配职业通常比匹配名字更简单。", "村人では名前より職業マッチの方が簡単です。"],
+  ["The shop that dialogue buttons can open.", "对话按钮可以打开的商店。", "会話ボタンで開けるショップです。"],
+  ["A shelf name used by shop entries.", "商品使用的货架名称。", "商品が使う棚の名前です。"],
+  ["A stable internal name for this goods row.", "这一行商品的稳定内部名称。", "この商品の安定した内部名です。"],
+  ["Use modid:item_name. The suggestion list is only a helper.", "使用 modid:item_name，建议列表只是辅助。", "modid:item_name を使います。候補一覧は補助です。"],
+  ["The wallet currency name. It can be the same as the main item ID.", "钱包货币名称，可以和主物品 ID 一样。", "ウォレット通貨名です。主アイテムIDと同じでも構いません。"],
+  ["The icon and default item used for this currency.", "这个货币使用的图标和默认物品。", "この通貨のアイコンとデフォルトアイテムです。"]
 ];
 
 const PHRASE_MAPS = {};
@@ -383,6 +470,7 @@ function translatePattern(body) {
     .replace(/^(\d+) 对话$/, (_, count) => language === "zh_cn" ? `${count} 对话` : language === "ja_jp" ? `${count} 会話` : `${count} dialogues`)
     .replace(/^(\d+) 商店$/, (_, count) => language === "zh_cn" ? `${count} 商店` : language === "ja_jp" ? `${count} ショップ` : `${count} shops`)
     .replace(/^(\d+) 物品建议$/, (_, count) => language === "zh_cn" ? `${count} 物品建议` : language === "ja_jp" ? `${count} アイテム候補` : `${count} item suggestions`)
+    .replace(/^(\d+) entries$/, (_, count) => language === "zh_cn" ? `${count} 个商品` : language === "ja_jp" ? `${count} 商品` : `${count} entries`)
     .replace(/^(\d+) 次$/, (_, count) => language === "zh_cn" ? `${count} 次` : language === "ja_jp" ? `${count} 回` : `${count} times`)
     .replace(/^(\d+) 个目标 · 下一步：(.+)$/, (_, count, next) => language === "zh_cn" ? `${count} 个目标 · 下一步：${translateBody(next)}` : language === "ja_jp" ? `${count} 目標 · 次：${translateBody(next)}` : `${count} ${objectiveWord} · Next: ${translateBody(next)}`)
     .replace(/^(\d+) 个目标 · (\d+) 个跳转$/, (_, objectives, transitions) => language === "zh_cn" ? `${objectives} 个目标 · ${transitions} 个跳转` : language === "ja_jp" ? `${objectives} 目標 · ${transitions} ${transitionWord}` : `${objectives} objectives · ${transitions} transitions`)
@@ -403,15 +491,24 @@ function translatePattern(body) {
     .replace(/^错误：任务 (.+) 的初始阶段不存在。$/, (_, id) => language === "zh_cn" ? `错误：任务 ${id} 的初始阶段不存在。` : language === "ja_jp" ? `エラー：クエスト ${id} の初期フェーズが存在しません。` : `Error: quest ${id} has a missing initial phase.`)
     .replace(/^错误：任务 (.+) 有阶段缺少 ID。$/, (_, id) => language === "zh_cn" ? `错误：任务 ${id} 有阶段缺少 ID。` : language === "ja_jp" ? `エラー：クエスト ${id} に ID のないフェーズがあります。` : `Error: quest ${id} has a phase without an ID.`)
     .replace(/^错误：任务 (.+) 的目标缺少类型或目标 ID。$/, (_, id) => language === "zh_cn" ? `错误：任务 ${id} 的目标缺少类型或目标 ID。` : language === "ja_jp" ? `エラー：クエスト ${id} の目標にタイプまたは対象 ID がありません。` : `Error: quest ${id} has an objective without a type or target ID.`)
+    .replace(/^错误：任务 (.+) 跳到了不存在的阶段：(.+)$/, (_, id, phase) => language === "zh_cn" ? `错误：任务 ${id} 跳到了不存在的阶段：${phase}` : language === "ja_jp" ? `エラー：クエスト ${id} は存在しないフェーズへ移動します：${phase}` : `Error: quest ${id} jumps to a missing phase: ${phase}`)
     .replace(/^错误：对话 ID 不合法：(.+)$/, (_, id) => language === "zh_cn" ? `错误：对话 ID 不合法：${id}` : language === "ja_jp" ? `エラー：会話 ID が不正です：${id}` : `Error: invalid dialogue ID: ${id}`)
     .replace(/^错误：对话 (.+) 的起始节点不存在。$/, (_, id) => language === "zh_cn" ? `错误：对话 ${id} 的起始节点不存在。` : language === "ja_jp" ? `エラー：会話 ${id} の開始ノードが存在しません。` : `Error: dialogue ${id} has a missing start node.`)
+    .replace(/^错误：对话 (.+) 的选项跳到了不存在的节点：(.+)$/, (_, id, node) => language === "zh_cn" ? `错误：对话 ${id} 的选项跳到了不存在的节点：${node}` : language === "ja_jp" ? `エラー：会話 ${id} の選択肢は存在しないノードへ移動します：${node}` : `Error: dialogue ${id} has a choice pointing at a missing node: ${node}`)
+    .replace(/^错误：对话 (.+) 接取了不存在的任务：(.+)$/, (_, id, quest) => language === "zh_cn" ? `错误：对话 ${id} 接取了不存在的任务：${quest}` : language === "ja_jp" ? `エラー：会話 ${id} は存在しないクエストを開始します：${quest === "未填写" ? "未入力" : quest}` : `Error: dialogue ${id} starts a missing quest: ${quest === "未填写" ? "not set" : quest}`)
+    .replace(/^错误：对话 (.+) 打开了不存在的商店：(.+)$/, (_, id, shop) => language === "zh_cn" ? `错误：对话 ${id} 打开了不存在的商店：${shop}` : language === "ja_jp" ? `エラー：会話 ${id} は存在しないショップを開きます：${shop === "未填写" ? "未入力" : shop}` : `Error: dialogue ${id} opens a missing shop: ${shop === "未填写" ? "not set" : shop}`)
     .replace(/^错误：有 NPC 绑定缺少文件名。$/, () => language === "zh_cn" ? "错误：有 NPC 绑定缺少文件名。" : language === "ja_jp" ? "エラー：ファイル名のない NPC バインドがあります。" : "Error: an NPC binding is missing a file name.")
     .replace(/^错误：NPC (.+) 缺少实体类型。$/, (_, id) => language === "zh_cn" ? `错误：NPC ${id} 缺少实体类型。` : language === "ja_jp" ? `エラー：NPC ${id} にエンティティタイプがありません。` : `Error: NPC ${id} is missing an entity type.`)
+    .replace(/^错误：NPC (.+) 有绑定没有指定对话。$/, (_, id) => language === "zh_cn" ? `错误：NPC ${id} 有绑定没有指定对话。` : language === "ja_jp" ? `エラー：NPC ${id} に会話未指定のバインドがあります。` : `Error: NPC ${id} has a binding without a dialogue.`)
+    .replace(/^错误：NPC (.+) 绑定了不存在的对话：(.+)$/, (_, id, dialogue) => language === "zh_cn" ? `错误：NPC ${id} 绑定了不存在的对话：${dialogue}` : language === "ja_jp" ? `エラー：NPC ${id} は存在しない会話にバインドされています：${dialogue}` : `Error: NPC ${id} binds a missing dialogue: ${dialogue}`)
     .replace(/^错误：商店 ID 不合法：(.+)$/, (_, id) => language === "zh_cn" ? `错误：商店 ID 不合法：${id}` : language === "ja_jp" ? `エラー：ショップ ID が不正です：${id}` : `Error: invalid shop ID: ${id}`)
     .replace(/^错误：商店 (.+) 有商品缺少 ID。$/, (_, id) => language === "zh_cn" ? `错误：商店 ${id} 有商品缺少 ID。` : language === "ja_jp" ? `エラー：ショップ ${id} に ID のない商品があります。` : `Error: shop ${id} has an entry without an ID.`)
     .replace(/^警告：商品 (.+) 没有花费。$/, (_, id) => language === "zh_cn" ? `警告：商品 ${id} 没有花费。` : language === "ja_jp" ? `警告：商品 ${id} にコストがありません。` : `Warning: entry ${id} has no costs.`)
     .replace(/^警告：商品 (.+) 没有获得物品。$/, (_, id) => language === "zh_cn" ? `警告：商品 ${id} 没有获得物品。` : language === "ja_jp" ? `警告：商品 ${id} に入手アイテムがありません。` : `Warning: entry ${id} has no rewards.`)
+    .replace(/^警告：商品 (.+) 使用了不存在的分类：(.+)$/, (_, id, category) => language === "zh_cn" ? `警告：商品 ${id} 使用了不存在的分类：${category}` : language === "ja_jp" ? `警告：商品 ${id} は存在しないカテゴリーを使っています：${category}` : `Warning: entry ${id} uses a missing category: ${category}`)
     .replace(/^错误：钱包 (.+) 没有绑定物品。$/, (_, id) => language === "zh_cn" ? `错误：钱包 ${id} 没有绑定物品。` : language === "ja_jp" ? `エラー：ウォレット ${id} にバインドされたアイテムがありません。` : `Error: wallet ${id} has no bound items.`)
+    .replace(/^警告：已有任务，但还没有任何对话按钮会接取任务。$/, () => language === "zh_cn" ? "警告：已有任务，但还没有任何对话按钮会接取任务。" : language === "ja_jp" ? "警告：クエストはありますが、開始する会話ボタンがありません。" : "Warning: quests exist, but no dialogue button starts a quest.")
+    .replace(/^警告：已有商店，但还没有任何对话按钮会打开商店。$/, () => language === "zh_cn" ? "警告：已有商店，但还没有任何对话按钮会打开商店。" : language === "ja_jp" ? "警告：ショップはありますが、開く会話ボタンがありません。" : "Warning: shops exist, but no dialogue button opens a shop.")
     .replace(/^错误：(.+)$/, (_, message) => language === "zh_cn" ? `错误：${message}` : language === "ja_jp" ? `エラー：${message}` : `Error: ${message}`)
     .replace(/^警告：(.+)$/, (_, message) => language === "zh_cn" ? `警告：${message}` : language === "ja_jp" ? `警告：${message}` : `Warning: ${message}`);
 }
@@ -459,10 +556,22 @@ function wireStaticEvents() {
     renderAll();
     showMessages(["已载入内置示例。"]);
   });
+  $("#quickStartBtn").addEventListener("click", () => {
+    switchView("setup");
+    $("#starterPanel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  $("#starterLoopBtn").addEventListener("click", createStarterLoop);
+  $("#guideValidateBtn").addEventListener("click", () => showMessages(validateData()));
+  $("#runChecklistBtn").addEventListener("click", () => showMessages(validateData()));
   $("#saveAllBtn").addEventListener("click", saveAll);
   $("#saveAllBtn2").addEventListener("click", saveAll);
   $("#validateBtn").addEventListener("click", () => showMessages(validateData()));
   $("#downloadIndexBtn").addEventListener("click", downloadFileIndex);
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-jump-view]");
+    if (!button) return;
+    switchView(button.dataset.jumpView);
+  });
 
   $("#namespaceInput").addEventListener("input", (event) => {
     state.settings.namespace = normalizeNamespace(event.target.value);
@@ -523,6 +632,8 @@ function switchView(view) {
   $$(".view").forEach((panel) => panel.classList.toggle("active", panel.dataset.viewPanel === view));
   $("#viewTitle").textContent = viewCopy[view][0];
   $("#viewSubtitle").textContent = viewCopy[view][1];
+  renderGuideStrip();
+  renderJourneyList();
   if (view === "export") {
     renderPreviewList();
     renderPreview();
@@ -538,6 +649,8 @@ function renderAll() {
   $("#viewTitle").textContent = viewCopy[state.activeView][0];
   $("#viewSubtitle").textContent = viewCopy[state.activeView][1];
   renderProjectStatus();
+  renderGuideStrip();
+  renderJourneyList();
   renderHints();
   renderLists();
   renderEditors();
@@ -552,6 +665,87 @@ function renderProjectStatus() {
   $("#projectHint").textContent = state.projectHandle
     ? "Can read existing config and write changes back to this project."
     : "You can use the example first, or select a modpack root folder.";
+}
+
+function renderGuideStrip() {
+  const copy = {
+    setup: [
+      "Beginner Path",
+      "First make one playable loop: dialogue starts a quest, the quest has a clear objective, and the NPC can also open a shop.",
+      [["quests", "Open Quest Board"], ["export", "Check and write"]]
+    ],
+    quests: [
+      "Beginner Path",
+      "Edit this like a story board. Each phase is one scene, and transitions decide which scene comes next.",
+      [["dialogues", "Dialogues"], ["export", "Check"]]
+    ],
+    dialogues: [
+      "Beginner Path",
+      "Write the lines the player will actually read. Choices are buttons, and actions are what the button does.",
+      [["npcs", "NPC"], ["shops", "Shops"]]
+    ],
+    npcs: [
+      "Beginner Path",
+      "Choose who owns the dialogue. For villagers, profession matching is usually the easiest route.",
+      [["dialogues", "Dialogues"], ["export", "Check"]]
+    ],
+    shops: [
+      "Beginner Path",
+      "Build the store shelf here: categories are shelves, entries are the goods, costs are what the player pays.",
+      [["wallets", "Wallets"], ["export", "Check"]]
+    ],
+    wallets: [
+      "Beginner Path",
+      "Bind money items here. Shops can still use item costs, but wallets make large prices manageable.",
+      [["shops", "Shops"], ["export", "Check"]]
+    ],
+    export: [
+      "Beginner Path",
+      "Run validation before writing. Treat warnings as design notes and errors as must-fix blockers.",
+      [["setup", "5-Minute Guide"]]
+    ]
+  }[state.activeView];
+  $("#guideStrip").innerHTML = `
+    <div>
+      <h3>${escapeHtml(copy[0])}</h3>
+      <p>${escapeHtml(copy[1])}</p>
+    </div>
+    <div class="guide-strip-actions">
+      ${copy[2].map(([view, label]) => `<button class="ghost-button small" type="button" data-jump-view="${escapeAttr(view)}">${escapeHtml(label)}</button>`).join("")}
+    </div>
+  `;
+}
+
+function renderJourneyList() {
+  const steps = getJourneySteps();
+  $("#journeyList").innerHTML = steps.map((step) => `
+    <div class="journey-item ${step.done ? "done" : "warn"}">
+      <span>${escapeHtml(step.done ? step.doneText : step.missingText)}</span>
+    </div>
+  `).join("");
+}
+
+function getJourneySteps() {
+  const hasQuest = state.data.quests.length > 0;
+  const startsQuest = state.data.dialogues.some((dialogue) => dialogueHasAction(dialogue, "start_quest"));
+  const boundDialogueIds = new Set(state.data.npcs.flatMap((npc) => (npc.bindings || []).map((binding) => binding.dialogueId).filter(Boolean)));
+  const dialogueIds = new Set(state.data.dialogues.map((dialogue) => dialogue.id));
+  const npcOpensDialogue = [...boundDialogueIds].some((id) => dialogueIds.has(id));
+  const opensShop = state.data.dialogues.some((dialogue) => dialogueHasAction(dialogue, "open_shop") || dialogueHasAction(dialogue, "open_trade"));
+  const hasWallet = state.data.wallets.some((wallet) => wallet.itemId || (wallet.itemIds || []).length);
+  const hasErrors = validateData().some((message) => isErrorMessage(message));
+  return [
+    { done: hasQuest, doneText: "Quest exists", missingText: "No quest yet" },
+    { done: startsQuest, doneText: "Dialogue starts quest", missingText: "No dialogue starts a quest yet" },
+    { done: npcOpensDialogue, doneText: "NPC opens dialogue", missingText: "No NPC binding reaches a dialogue yet" },
+    { done: opensShop, doneText: "Dialogue opens shop", missingText: "No dialogue opens a shop yet" },
+    { done: hasWallet, doneText: "Wallet is set", missingText: "No wallet currency yet" },
+    { done: !hasErrors, doneText: "Validation passes", missingText: "Fix validation errors" }
+  ];
+}
+
+function dialogueHasAction(dialogue, type) {
+  return (dialogue.nodes || []).some((node) => (node.choices || []).some((choice) => (choice.actions || []).some((action) => action.type === type)));
 }
 
 function renderHints() {
@@ -645,6 +839,87 @@ function renderEditors() {
   renderWalletEditor();
 }
 
+function renderPreviewShell(cards) {
+  return `
+    <div class="player-preview">
+      <h4>Player Preview</h4>
+      <div class="preview-grid">
+        ${cards.map((card) => `
+          <div class="preview-card ${card.kind || ""}">
+            <strong>${escapeHtml(card.title)}</strong>
+            <span>${escapeHtml(card.body || "")}</span>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderQuestPreview(quest) {
+  const initial = quest.phases.find((phase) => phase.phaseId === quest.initialPhaseId) || quest.phases[0] || {};
+  const firstObjective = initial.objectives?.[0];
+  const startDialogue = findDialogueForQuest(quest.id);
+  const rewards = (quest.completionRewards || []).length ? quest.completionRewards : (initial.phaseRewards || []);
+  return renderPreviewShell([
+    { title: "Starts From", body: startDialogue ? `${startDialogue.defaultNpc || "NPC"} / ${startDialogue.id}` : "No dialogue button starts this quest yet", kind: startDialogue ? "good" : "warn" },
+    { title: "Current Goal", body: firstObjective ? objectiveSummary(firstObjective) : "No objective yet", kind: firstObjective ? "good" : "warn" },
+    { title: "Reward", body: rewardListSummary(rewards), kind: rewards.length ? "good" : "warn" }
+  ]);
+}
+
+function renderDialoguePreview(dialogue) {
+  const start = dialogue.nodes.find((node) => node.nodeId === dialogue.startNodeId) || dialogue.nodes[0] || {};
+  const choiceText = (start.choices || []).map((choice) => choice.text || choice.choiceId).filter(Boolean).slice(0, 3).join(" / ");
+  return renderPreviewShell([
+    { title: "Speaker", body: dialogue.defaultNpc || "NPC", kind: dialogue.defaultNpc ? "good" : "warn" },
+    { title: "First Line", body: plainText(start.text || "No line yet").slice(0, 96), kind: start.text ? "good" : "warn" },
+    { title: "Buttons", body: choiceText || "No choices yet", kind: choiceText ? "good" : "warn" }
+  ]);
+}
+
+function renderNpcPreview(npc) {
+  const firstBinding = npc.bindings?.[0] || {};
+  const targetDialogue = firstBinding.dialogueId || firstBinding.dialogueIdFromNbt || "No dialogue selected";
+  return renderPreviewShell([
+    { title: "Owner", body: npc.entityType || "No entity selected", kind: npc.entityType ? "good" : "warn" },
+    { title: "Binding Rule", body: conditionLabel(firstBinding.condition?.condition || "chronicle_engine:always", true), kind: firstBinding.dialogueId ? "good" : "warn" },
+    { title: "Behavior", body: `${targetDialogue} · ${npc.cancelVanillaInteract ? "blocks vanilla trade" : "keeps vanilla action"}`, kind: firstBinding.dialogueId ? "good" : "warn" }
+  ]);
+}
+
+function renderShopPreview(shop) {
+  const entry = shop.entries?.[0];
+  return renderPreviewShell([
+    { title: "Shelves", body: (shop.categories || []).map((category) => category.displayName || category.categoryId).join(" / ") || "No categories yet", kind: (shop.categories || []).length ? "good" : "warn" },
+    { title: "Goods", body: `${(shop.entries || []).length} entries`, kind: (shop.entries || []).length ? "good" : "warn" },
+    { title: "Price Example", body: entry ? `${rewardListSummary(entry.costs)} -> ${rewardListSummary(entry.rewards)}` : "No goods yet", kind: entry ? "good" : "warn" }
+  ]);
+}
+
+function renderWalletPreview(wallet) {
+  return renderPreviewShell([
+    { title: "Money Item", body: wallet.itemId || wallet.itemIds?.[0] || "No item selected", kind: wallet.itemId || wallet.itemIds?.length ? "good" : "warn" },
+    { title: "Stored As", body: wallet.displayName || wallet.currencyId || "Currency", kind: wallet.currencyId ? "good" : "warn" },
+    { title: "Usage", body: "Players can store these items in the CE:RF wallet for large shop prices.", kind: "good" }
+  ]);
+}
+
+function findDialogueForQuest(questId) {
+  return state.data.dialogues.find((dialogue) => (dialogue.nodes || []).some((node) => (node.choices || []).some((choice) => (choice.actions || []).some((action) => action.type === "start_quest" && action.questId === questId))));
+}
+
+function objectiveSummary(objective) {
+  const type = objective.type || "OBJECTIVE";
+  const target = objective.targetId || "target";
+  const count = objective.requiredCount || 1;
+  return objective.displayText || `${type} ${target} x${count}`;
+}
+
+function rewardListSummary(rewards) {
+  if (!rewards || !rewards.length) return "No reward yet";
+  return rewards.slice(0, 2).map((reward) => rewardSummary(reward)).join(" / ");
+}
+
 function renderQuestEditor() {
   const quest = findById(state.data.quests, "id", state.selected.quests);
   const root = $("#questEditor");
@@ -652,6 +927,7 @@ function renderQuestEditor() {
   const initialPhaseOptions = phaseTargetOptions(quest, quest.initialPhaseId, false);
   root.innerHTML = `
     ${sectionTitle("任务", quest.id)}
+    ${renderQuestPreview(quest)}
     <div class="form-grid two">
       ${field("任务 ID", "id", quest.id, "questSuggestions")}
       ${field("显示名称", "displayName", quest.displayName)}
@@ -817,6 +1093,7 @@ function renderDialogueEditor() {
   if (!dialogue) return renderEmpty(root);
   root.innerHTML = `
     ${sectionTitle("对话", dialogue.id)}
+    ${renderDialoguePreview(dialogue)}
     <div class="form-grid two">
       ${field("对话 ID", "id", dialogue.id, "dialogueSuggestions")}
       ${field("NPC 默认显示名", "defaultNpc", dialogue.defaultNpc)}
@@ -883,6 +1160,7 @@ function renderNpcEditor() {
   if (!npc) return renderEmpty(root);
   root.innerHTML = `
     ${sectionTitle("NPC 绑定", npc.localId)}
+    ${renderNpcPreview(npc)}
     <div class="form-grid two">
       ${field("文件名", "localId", npc.localId)}
       ${field("实体类型", "entityType", npc.entityType, "entitySuggestions")}
@@ -927,6 +1205,7 @@ function renderShopEditor() {
   if (!shop) return renderEmpty(root);
   root.innerHTML = `
     ${sectionTitle("商店", shop.shopId)}
+    ${renderShopPreview(shop)}
     <div class="form-grid two">
       ${field("商店 ID", "shopId", shop.shopId, "shopSuggestions")}
       ${field("显示名称", "displayName", shop.displayName)}
@@ -996,6 +1275,7 @@ function renderWalletEditor() {
   if (!wallet) return renderEmpty(root);
   root.innerHTML = `
     ${sectionTitle("钱包货币", wallet.currencyId)}
+    ${renderWalletPreview(wallet)}
     <div class="form-grid two">
       ${field("货币 ID", "currencyId", wallet.currencyId)}
       ${field("显示名称", "displayName", wallet.displayName)}
@@ -1366,22 +1646,28 @@ function phaseTargetOptions(quest, currentValue = "", includeComplete = true) {
 }
 
 function field(labelText, bind, value, datalist = "", type = "text") {
+  const help = fieldHelp(labelText);
   return `<label>${escapeHtml(labelText)}
     <input data-bind="${escapeHtml(bind)}" type="${type}" value="${escapeAttr(value ?? "")}" ${datalist ? `list="${datalist}"` : ""}>
+    ${help ? `<span class="field-hint">${escapeHtml(help)}</span>` : ""}
   </label>`;
 }
 
 function textareaField(labelText, bind, value) {
+  const help = fieldHelp(labelText);
   return `<label class="wide-field">${escapeHtml(labelText)}
     <textarea data-bind="${escapeHtml(bind)}">${escapeHtml(value ?? "")}</textarea>
+    ${help ? `<span class="field-hint">${escapeHtml(help)}</span>` : ""}
   </label>`;
 }
 
 function selectField(labelText, bind, value, options) {
+  const help = fieldHelp(labelText);
   return `<label>${escapeHtml(labelText)}
     <select data-bind="${escapeHtml(bind)}">
       ${options.map(([optionValue, optionLabel]) => `<option value="${escapeAttr(optionValue)}" ${value === optionValue ? "selected" : ""}>${escapeHtml(optionLabel)}</option>`).join("")}
     </select>
+    ${help ? `<span class="field-hint">${escapeHtml(help)}</span>` : ""}
   </label>`;
 }
 
@@ -1398,6 +1684,35 @@ function stringListField(labelText, bind, values, datalist = "") {
     <textarea data-string-list="${escapeHtml(bind)}" ${datalist ? `list="${datalist}"` : ""}>${escapeHtml(value)}</textarea>
     <span class="note">每行一个 ID 或旗标。</span>
   </label>`;
+}
+
+function fieldHelp(labelText) {
+  const help = {
+    "任务 ID": "A unique story label. Use namespace:name, for example my_story:first_job.",
+    "显示名称": "The name players see in game.",
+    "初始阶段": "The first scene after the player accepts this quest.",
+    "任务描述": "A short reason for why the player is doing this.",
+    "阶段 ID": "A stable name used by transitions. Keep it simple and do not rename it casually.",
+    "阶段描述": "What the player should do right now.",
+    "阶段剧情": "Optional flavor text shown in the guide.",
+    "目标 ID": "What the player kills, collects, offers, or interacts with.",
+    "显示文本": "The task line shown to the player.",
+    "目标阶段": "Where the story goes after this phase is done.",
+    "对话 ID": "The dialogue file that an NPC can open.",
+    "起始节点 ID": "The first line shown when this dialogue opens.",
+    "台词": "What the NPC says on this scene.",
+    "按钮文字": "The option the player clicks.",
+    "跳到节点 ID": "Leave empty to close, or choose another node to continue the conversation.",
+    "实体类型": "The creature or villager type that can open this dialogue.",
+    "村民职业": "For villagers, this is usually easier than matching names.",
+    "商店 ID": "The shop that dialogue buttons can open.",
+    "分类 ID": "A shelf name used by shop entries.",
+    "商品 ID": "A stable internal name for this goods row.",
+    "物品 ID": "Use modid:item_name. The suggestion list is only a helper.",
+    "货币 ID": "The wallet currency name. It can be the same as the main item ID.",
+    "主物品 ID": "The icon and default item used for this currency."
+  };
+  return tr(help[labelText] || "");
 }
 
 function readInputValue(input) {
@@ -1612,6 +1927,15 @@ function defaultAction(type) {
   if (type === "item" || type === "give_item") return defaultReward(type, "minecraft:bread", 1);
   if (type === "command" || type === "run_command") return { type, command: "say hello {player}" };
   return { type: "close" };
+}
+
+function createStarterLoop() {
+  loadExample();
+  renderAll();
+  switchView("quests");
+  const target = $("#questEditor");
+  target?.classList.add("attention-pulse");
+  window.setTimeout(() => target?.classList.remove("attention-pulse"), 900);
 }
 
 function loadExample() {
@@ -2141,7 +2465,7 @@ function cleanRewards(rewards) {
 async function saveAll() {
   const validation = validateData();
   showMessages(validation);
-  if (validation.some((message) => message.startsWith("错误"))) return;
+  if (validation.some((message) => isErrorMessage(message))) return;
   if (!state.projectHandle) {
     showMessages(["请先选择项目文件夹。没有目录权限时，可在导出页复制 JSON 预览。"], "warn");
     return;
@@ -2203,36 +2527,61 @@ async function listFiles(root, extensions, limit) {
 
 function validateData() {
   const messages = [];
+  const questIds = new Set(state.data.quests.map((quest) => quest.id));
+  const dialogueIds = new Set(state.data.dialogues.map((dialogue) => dialogue.id));
+  const shopIds = new Set(state.data.shops.map((shop) => shop.shopId));
   for (const quest of state.data.quests) {
     if (!isNamespacedId(quest.id)) messages.push(`错误：任务 ID 不合法：${quest.id}`);
     if (!quest.phases.length) messages.push(`错误：任务 ${quest.id} 没有阶段。`);
     if (!quest.phases.some((phase) => phase.phaseId === quest.initialPhaseId)) messages.push(`错误：任务 ${quest.id} 的初始阶段不存在。`);
+    const phaseIds = new Set(quest.phases.map((phase) => phase.phaseId).filter(Boolean));
     for (const phase of quest.phases) {
       if (!phase.phaseId) messages.push(`错误：任务 ${quest.id} 有阶段缺少 ID。`);
       for (const objective of phase.objectives) {
         if (!objective.type || !objective.targetId) messages.push(`错误：任务 ${quest.id} 的目标缺少类型或目标 ID。`);
+      }
+      for (const transition of phase.transitions || []) {
+        if (transition.targetPhaseId && !phaseIds.has(transition.targetPhaseId)) messages.push(`错误：任务 ${quest.id} 跳到了不存在的阶段：${transition.targetPhaseId}`);
       }
     }
   }
   for (const dialogue of state.data.dialogues) {
     if (!isNamespacedId(dialogue.id)) messages.push(`错误：对话 ID 不合法：${dialogue.id}`);
     if (!dialogue.nodes.some((node) => node.nodeId === dialogue.startNodeId)) messages.push(`错误：对话 ${dialogue.id} 的起始节点不存在。`);
+    const nodeIds = new Set(dialogue.nodes.map((node) => node.nodeId).filter(Boolean));
+    for (const node of dialogue.nodes) {
+      for (const choice of node.choices || []) {
+        if (choice.nextNodeId && !nodeIds.has(choice.nextNodeId)) messages.push(`错误：对话 ${dialogue.id} 的选项跳到了不存在的节点：${choice.nextNodeId}`);
+        for (const action of choice.actions || []) {
+          if (action.type === "start_quest" && !questIds.has(action.questId)) messages.push(`错误：对话 ${dialogue.id} 接取了不存在的任务：${action.questId || "未填写"}`);
+          if ((action.type === "open_shop" || action.type === "open_trade") && !shopIds.has(action.shopId)) messages.push(`错误：对话 ${dialogue.id} 打开了不存在的商店：${action.shopId || "未填写"}`);
+        }
+      }
+    }
   }
   for (const npc of state.data.npcs) {
     if (!npc.localId) messages.push("错误：有 NPC 绑定缺少文件名。");
     if (!npc.entityType) messages.push(`错误：NPC ${npc.localId} 缺少实体类型。`);
+    for (const binding of npc.bindings || []) {
+      if (!binding.dialogueId && !binding.dialogueIdFromNbt) messages.push(`错误：NPC ${npc.localId} 有绑定没有指定对话。`);
+      if (binding.dialogueId && !dialogueIds.has(binding.dialogueId)) messages.push(`错误：NPC ${npc.localId} 绑定了不存在的对话：${binding.dialogueId}`);
+    }
   }
   for (const shop of state.data.shops) {
     if (!isNamespacedId(shop.shopId)) messages.push(`错误：商店 ID 不合法：${shop.shopId}`);
+    const categoryIds = new Set(shop.categories.map((category) => category.categoryId).filter(Boolean));
     for (const entry of shop.entries) {
       if (!entry.entryId) messages.push(`错误：商店 ${shop.shopId} 有商品缺少 ID。`);
       if (!entry.costs.length) messages.push(`警告：商品 ${entry.entryId} 没有花费。`);
       if (!entry.rewards.length) messages.push(`警告：商品 ${entry.entryId} 没有获得物品。`);
+      if (entry.category && categoryIds.size && !categoryIds.has(entry.category)) messages.push(`警告：商品 ${entry.entryId} 使用了不存在的分类：${entry.category}`);
     }
   }
   for (const wallet of state.data.wallets) {
     if (!wallet.itemId && !wallet.itemIds.length) messages.push(`错误：钱包 ${wallet.currencyId} 没有绑定物品。`);
   }
+  if (state.data.quests.length && !state.data.dialogues.some((dialogue) => dialogueHasAction(dialogue, "start_quest"))) messages.push("警告：已有任务，但还没有任何对话按钮会接取任务。");
+  if (state.data.shops.length && !state.data.dialogues.some((dialogue) => dialogueHasAction(dialogue, "open_shop") || dialogueHasAction(dialogue, "open_trade"))) messages.push("警告：已有商店，但还没有任何对话按钮会打开商店。");
   if (!messages.length) messages.push("检查通过：没有发现阻止写入的问题。");
   return messages;
 }
@@ -2241,10 +2590,18 @@ function showMessages(messages, forcedType = "") {
   const root = $("#validationMessages");
   if (!root) return;
   root.innerHTML = messages.map((message) => {
-    const type = forcedType || (message.startsWith("错误") ? "error" : message.startsWith("警告") ? "warn" : "ok");
+    const type = forcedType || (isErrorMessage(message) ? "error" : isWarningMessage(message) ? "warn" : "ok");
     return `<div class="message ${type}">${escapeHtml(message)}</div>`;
   }).join("");
   switchView("export");
+}
+
+function isErrorMessage(message) {
+  return String(message).startsWith("错误") || String(message).startsWith("Error");
+}
+
+function isWarningMessage(message) {
+  return String(message).startsWith("警告") || String(message).startsWith("Warning");
 }
 
 function renderPreviewList() {
